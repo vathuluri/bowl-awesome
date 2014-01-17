@@ -1,15 +1,13 @@
 angular.module('listExample.controllers', [])
 
-
-// Controller that fetches a list of data
-.controller('IndexCtrl', function ($scope, MovieService, Modal) {
+.controller('IndexCtrl', function ($scope, ActionSheet, Modal) {
 
     // "MovieService" is a service returning mock data (services.js)
     // the returned data from the service is placed into this 
     // controller's scope so the template can render the data
-    $scope.movies = MovieService.all();
+    $scope.leagues = angular.fromJson(window.localStorage['leagues']);
 
-    $scope.title = "Bowl-Awesome";
+    $scope.title = "Leagues";
 
     // Load the modal from the given template URL
     Modal.fromTemplateUrl('modal.html', function (modal) {
@@ -21,13 +19,6 @@ angular.module('listExample.controllers', [])
         animation: 'slide-in-up'
     });
 
-    $scope.leftButtons = [
-    {
-        type: 'button-positive',
-        content: '<i class="icon ion-navicon"></i>',
-        tap: function (e) {
-        }
-    }];
 
     $scope.rightButtons = [
   {
@@ -35,30 +26,79 @@ angular.module('listExample.controllers', [])
       content: '<i class="icon ion-plus"></i>',
       tap: function (e) {
           $scope.modal.show();
-          //$scope.gameNumber = 10;
       }
   }];
-    
+
     $scope.closeModal = function () {
         $scope.modal.hide();
     };
 
-    $scope.closeNewTask = function() {
+    $scope.closeNewTask = function () {
         $scope.modal.hide();
     };
 
-    $scope.createNewRecord = function (record) {
-        var score = record.gameNumber;
-        alert(record.gameScore);
+    $scope.createNewLeague = function (record) {
+        var leagues;
+        if (typeof localStorage["leagues"] != 'undefined') {
+            leagues = angular.fromJson(window.localStorage['leagues']);;
+            leagues.push({ id: 2, name: record.leagueName, avgScore: 105 });
+        } else {
+            leagues = [];
+            leagues.push({ id: 2, name: record.leagueName, avgScore: 105 });
+        }
+        window.localStorage['leagues'] = angular.toJson(leagues);
+        record.leagueName = "";
+        $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.modal.hide();
     };
 })
 
-// Controller that shows more detailed info about a movie
-.controller('MovieDetailCtrl', function ($scope, $routeParams, MovieService) {
+.controller('GameDetailCtrl', function ($scope, $routeParams, MovieService) {
     // "MovieService" is a service returning mock data (services.js)
     $scope.movie = MovieService.get($routeParams.movieId);
-    $scope.title = "Movie Info";
+    $scope.title = "Games";
+
+    $scope.rightButtons = [
+      {
+          type: 'button-clear',
+          content: '<i class="icon ion-plus"></i>',
+          tap: function (e) {
+              alert('Hello Game details controller');
+          }
+      }];
+})
+
+.controller('SeriesDetailsCtrl', function ($scope, $routeParams, MovieService, Modal) {
+    // "MovieService" is a service returning mock data (services.js)
+    $scope.movie = MovieService.get($routeParams.movieId);
+    $scope.title = "League Summary";
+
+    Modal.fromTemplateUrl('modal2.html', function (modal) {
+        $scope.modal = modal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
+
+    $scope.rightButtons = [
+     {
+         type: 'button-clear',
+         content: '<i class="icon ion-plus"></i>',
+         tap: function (e) {
+             $scope.modal.show();
+             //alert('Hello Series details controller');
+         }
+     }];
+
+    $scope.closeNewTask = function () {
+        $scope.modal.hide();
+    };
+
+    $scope.closeModal = function () {
+        $scope.modal.hide();
+    };
 })
 
 .controller('ModalCtrl', function ($scope, Modal) {
@@ -72,13 +112,6 @@ angular.module('listExample.controllers', [])
         // The animation we want to use for the modal entrance
         animation: 'slide-in-up'
     });
-
-    // Test data
-    $scope.contacts = [
-      { name: 'Gordon Freeman' },
-      { name: 'Barney Calhoun' },
-      { name: 'Lamarr the Headcrab' }
-    ];
 
     $scope.openModal = function () {
         $scope.modal.show();

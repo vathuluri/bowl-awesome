@@ -26,11 +26,6 @@
 
 </head>
 
-<!-- 
-    'listExample' is the name of this angular module (app.js)
-    'nav-router' attribute updates the nav-bar title and animations as you navigate
-    'animation' attribute sets which type of animations to use
-  -->
 <body ng-app="listExample" nav-router animation="slide-left-right-ios7">
 
     <!-- The nav bar that will be updated as we navigate -->
@@ -49,51 +44,65 @@
       http://docs.angularjs.org/api/ng.directive:script
     -->
 
-    <!--
-      This template loads when the the root '/' url is matched (app.js)
-      'movies' is a $scope variable which was created in MovieIndexCtrl (controllers.js)
-      The MovieIndexCtrl gets data from the MovieService (service.js)
-    -->
     <script type="text/ng-template" id="/index.html">
       <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
         <content has-header="true">
-           <div class="list">
-         <div class="item item-divider">
-               Date
-             <span class="item-note">
-                Games Played 
-            </span>
-          </div>
-             <a class="item item-icon-left item-icon-right" href="#/movie">
-                07 Dec, 2013
-                <span class="item-note">
-                 3 
+           <div class="list" >
+             <div class="item item-divider">
+        <i class="icon ion-speedometer"></i>   
+                  League Name
+                 <span class="item-note">
+                    Avg Score 
                 </span>
-             </a>
-            <a class="item item-icon-left item-icon-right" href="#">
-                01 Dec, 2013
-            <span class="item-note">
-                107
-            </span>
-            </a>
-        </div>  
+              </div>
+        <a class="item " ng-repeat="league in leagues" href="#/seriesDetails"">
+          {{league.name}}
+          <span class="item-note"> {{league.avgScore}}</span>
+        </a>
 
-         <!-- <list>
-            <link-item ng-repeat="movie in movies" href="#/movie/{{movie.id}}" type="item-link">
-              {{ movie.title }}
-            </item>
-          </list>-->
+         
+        </div>  
         </content>
       </nav-page>
     </script>
 
-    <!--
-      This template loads when the '/movie/:movieId' url is matched (app.js)
-      'movie' is a $scope variable which was created in MovieDetailCtrl (controllers.js)
-      The MovieDetailCtrl gets data from the MovieService (service.js)
-    -->
-    <script type="text/ng-template" id="/movie.html">
-      <nav-page title="title">
+    <script type="text/ng-template" id="/seriesDetails.html">
+      <nav-page title="title" right-buttons="rightButtons">     
+        <content has-header="true">
+           <div class="list">
+              <div class="item item-divider">
+                Date
+             <span class="item-note">
+                    Avg Series Score
+             </span>
+              </div>
+             <a class="item item-icon-left item-icon-right" href="#/gameDetails">
+                <i class="icon ion-ios7-heart-outline assertive"></i>
+                Dec 07, 2013
+                <span class="item-note">
+                  127
+                </span>
+             </a>
+             <a class="item item-icon-left item-icon-right" href="#/gameDetails">
+                 Dec 09, 2013
+                    <span class="item-note">
+                      87
+                    </span>
+                 </a>
+             <a class="item item-icon-left item-icon-right" href="#/gameDetails">
+                    Dec 19, 2013
+                    <span class="item-note">
+                      117
+                    </span>
+                 </a>
+            </div> 
+         
+    </content>
+      </nav-page>
+    </script>
+
+    <script type="text/ng-template" id="/gameDetails.html">
+      <nav-page ng-controller="GameDetailCtrl" title="title"  right-buttons="rightButtons" >
         <content has-header="true">
            <div class="list">
               <div class="item item-divider">
@@ -121,42 +130,46 @@
                       117
                     </span>
                  </a>
-            </div>  
-             
-          <!-- <nav-page title="title">
-        <content has-header="true" padding="true">
-          <h1>{{ movie.title }}</h1>
-          <dl>
-            <dt>Description:</dt>
-            <dd>{{ movie.description }}</dd>
-          </dl>
-          <dl>
-            <dt>Released:</dt>
-            <dd>{{ movie.released }}</dd>
-          </dl>
-          <dl>
-            <dt>Director:</dt>
-            <dd>{{ movie.director }}</dd>
-          </dl>
-          <dl>
-            <dt>Rating:</dt>
-            <dd>{{ movie.rating }}</dd>
-          </dl>
-        </content>
-      </nav-page>-->
-
+            </div> </content>
+      </nav-page>  
     </script>
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal">
         <header class="padding bar bar-header bar-positive">
-          <h1 class="title">New Task</h1>
+          <h1 class="title">Add New League</h1>
+          <button class="button button-clear" ng-click="closeModal()">Cancel</button>
+        </header>
+        <content has-header="true">
+          <form ng-submit="createNewLeague(record)">
+           <div class="list">
+            <label class="item item-input">
+                    <span class="input-label">League Name</span>
+                    <input type="text" ng-model="record.leagueName">
+                  </label>      
+                         </div>
+            <div class="padding">
+              <button type="submit" class="button button-block button-positive">Create Record</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+
+    <script id="modal2.html" type="text/ng-template">
+      <div class="modal">
+        <header class="padding bar bar-header bar-positive">
+          <h1 class="title">New Series</h1>
           <button class="button button-clear" ng-click="closeModal()">Cancel</button>
         </header>
         <content has-header="true">
           <form ng-submit="createNewRecord(record)">
            <div class="list">
-              <label class="item item-input">
+            <label class="item item-input">
+                    <span class="input-label">Date</span>
+                    <input type="text" ng-model="record.gameNumber">
+                  </label>      
+             <label class="item item-input">
                 <span class="input-label">Game</span>
                 <input type="text" ng-model="record.gameNumber">
               </label>
