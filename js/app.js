@@ -50,14 +50,14 @@ angular.module('listExample', ['ionic', 'ngRoute', 'ngAnimate', 'listExample.ser
 
     // if the url matches something like /movie/88 then this route
     // will fire off the MovieDetailCtrl (controllers.js)
-    $routeProvider.when('/gameDetails/', {
+    $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', {
         templateUrl: '/gameDetails.html',
         controller: 'GameDetailCtrl'
     });
 
     // if the url matches something like /movie/88 then this route
     // will fire off the MovieDetailCtrl (controllers.js)
-    $routeProvider.when('/seriesDetails/', {
+    $routeProvider.when('/seriesDetails/:id', {
         templateUrl: '/seriesDetails.html',
         controller: 'SeriesDetailsCtrl'
     });

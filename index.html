@@ -49,18 +49,17 @@
         <content has-header="true">
            <div class="list" >
              <div class="item item-divider">
-        <i class="icon ion-speedometer"></i>   
                   League Name
                  <span class="item-note">
+         <i class="icon ion-speedometer assertive"></i> 
                     Avg Score 
                 </span>
               </div>
-        <a class="item " ng-repeat="league in leagues" href="#/seriesDetails"">
+        <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
+        <span style="display:none"></span> 
           {{league.name}}
           <span class="item-note"> {{league.avgScore}}</span>
         </a>
-
-         
         </div>  
         </content>
       </nav-page>
@@ -73,30 +72,17 @@
               <div class="item item-divider">
                 Date
              <span class="item-note">
-                    Avg Series Score
+                   <i class="icon ion-ios7-speedometer-outline assertive"></i> Avg Series Score
              </span>
               </div>
-             <a class="item item-icon-left item-icon-right" href="#/gameDetails">
-                <i class="icon ion-ios7-heart-outline assertive"></i>
-                Dec 07, 2013
+             <a class="item" ng-repeat="seriesObj in serieses" ng-click="doRedirect(seriesObj)">
+                <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
+                {{seriesObj.name}}
                 <span class="item-note">
-                  127
+                  {{seriesObj.avgScore}}
                 </span>
              </a>
-             <a class="item item-icon-left item-icon-right" href="#/gameDetails">
-                 Dec 09, 2013
-                    <span class="item-note">
-                      87
-                    </span>
-                 </a>
-             <a class="item item-icon-left item-icon-right" href="#/gameDetails">
-                    Dec 19, 2013
-                    <span class="item-note">
-                      117
-                    </span>
-                 </a>
             </div> 
-         
     </content>
       </nav-page>
     </script>
@@ -111,25 +97,13 @@
                      Score
              </span>
               </div>
-             <a class="item item-icon-left item-icon-right" href="#">
-                <i class="icon ion-ios7-heart-outline assertive"></i>
-                Game 1
+             <a class="item" ng-repeat="game in games" ng-click="doRedirect(seriesObj)">
+                <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
+                Game : {{game.game}}
                 <span class="item-note">
-                  127
+                  {{game.score}}
                 </span>
              </a>
-             <a class="item item-icon-left item-icon-right" href="#">
-                 Game 2
-                    <span class="item-note">
-                      87
-                    </span>
-                 </a>
-             <a class="item item-icon-left item-icon-right" href="#">
-                    Game 3
-                    <span class="item-note">
-                      117
-                    </span>
-                 </a>
             </div> </content>
       </nav-page>  
     </script>
@@ -156,27 +130,45 @@
       </div>
     </script>
 
-    <script id="modal2.html" type="text/ng-template">
+    <script id="seriesModal.html" type="text/ng-template">
       <div class="modal">
         <header class="padding bar bar-header bar-positive">
           <h1 class="title">New Series</h1>
           <button class="button button-clear" ng-click="closeModal()">Cancel</button>
         </header>
         <content has-header="true">
-          <form ng-submit="createNewRecord(record)">
+          <form ng-submit="createNewSeries(record)">
            <div class="list">
             <label class="item item-input">
                     <span class="input-label">Date</span>
-                    <input type="text" ng-model="record.gameNumber">
+                    <input type="text" ng-model="record.seriesName">
                   </label>      
-             <label class="item item-input">
-                <span class="input-label">Game</span>
-                <input type="text" ng-model="record.gameNumber">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Score</span>
-                <input type="number" ng-model="record.gameScore">
-              </label>
+            </div>
+            <div class="padding">
+              <button type="submit" class="button button-block button-positive">Create Record</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+
+    <script id="gameModal.html" type="text/ng-template">
+      <div class="modal">
+        <header class="padding bar bar-header bar-positive">
+          <h1 class="title">New Series</h1>
+          <button class="button button-clear" ng-click="closeModal()">Cancel</button>
+        </header>
+        <content has-header="true">
+          <form ng-submit="createNewGame(record)">
+           <div class="list">
+            <label class="item item-input">
+                    <span class="input-label">Game</span>
+                    <input type="number" ng-model="record.gameNumber">
+                  </label>
+        <label class="item item-input">
+                    <span class="input-label">Score</span>
+                    <input type="number" ng-model="record.gameScore">
+                  </label>            
             </div>
             <div class="padding">
               <button type="submit" class="button button-block button-positive">Create Record</button>
