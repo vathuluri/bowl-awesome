@@ -7,6 +7,12 @@ angular.module('listExample.controllers', [])
     // controller's scope so the template can render the data
     $scope.leagues = angular.fromJson(window.localStorage['leagues']);
 
+    $scope.AvgLeagueScore = function (leagueId, seriesId) {
+        var leagues = angular.fromJson(window.localStorage['leagues']);
+        var series = angular.fromJson(window.localStorage['series']);
+        
+    };
+
     $scope.title = "Leagues";
 
     // Load the modal from the given template URL
@@ -44,7 +50,7 @@ angular.module('listExample.controllers', [])
             leagues = angular.fromJson(window.localStorage['leagues']);;
             leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
         } else {
-            leagues = [];
+            leagues = new Array();
             leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
         }
         window.localStorage['leagues'] = angular.toJson(leagues);
@@ -57,6 +63,8 @@ angular.module('listExample.controllers', [])
         var id = league.id;
         $location.path('/seriesDetails/' + id);
     };
+
+    
 })
 
 .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, Modal) {
@@ -88,7 +96,7 @@ angular.module('listExample.controllers', [])
             game = angular.fromJson(window.localStorage['game']);;
             game.push({ id: Math.floor((Math.random() * 1000) + 1), game: record.gameNumber, score: record.gameScore, leagueId: $routeParams.leagueId, seriesId: $routeParams.seriesId });
         } else {
-            game = [];
+            game = new Array();
             game.push({ id: Math.floor((Math.random() * 1000) + 1), game: record.gameNumber, score: record.gameScore, leagueId: $routeParams.leagueId, seriesId: $routeParams.seriesId });
         }
         window.localStorage['game'] = angular.toJson(game);
@@ -130,7 +138,7 @@ angular.module('listExample.controllers', [])
             series = angular.fromJson(window.localStorage['series']);;
             series.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.seriesName, avgScore: 0, leagueId: $scope.leagueId });
         } else {
-            series = [];
+            series = new Array();
             series.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.seriesName, avgScore: 0, leagueId: $scope.leagueId });
         }
         window.localStorage['series'] = angular.toJson(series);

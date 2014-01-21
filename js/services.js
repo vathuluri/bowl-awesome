@@ -47,4 +47,29 @@ angular.module('listExample.services', [])
             return gamesBySeries;
         }
     };
-});
+})
+    .factory('AvgScoreService', function (leagueId, seriesId) {
+        $scope.leagues = leagueId;
+        $scope.seriesId = seriesId;
+        var games = angular.fromJson(localStorage['game']);
+
+        return {
+            all: function () {
+                return serieses;
+            },
+            leagueAvg: function (leagueId, seriesId) {
+                games = angular.fromJson(localStorage['game']);
+                if (typeof games != 'undefined') {
+                    for (var i = 0, l = games.length; i < l; i++) {
+                        if (games[i].leagueId == leagueId && games[i].seriesId == seriesId) {
+                            //gamesBySeries.push(games[i]);
+                        }
+                    }
+                }
+                return gamesBySeries;
+            },
+            seriesAvg: function () {
+                return null;
+            }
+        };
+    });
