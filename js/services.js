@@ -49,9 +49,9 @@ angular.module('listExample.services', [])
     };
 })
 .factory('AvgScoreService', function () {
-    var games = angular.fromJson(localStorage['game']);
-    var leagues = angular.fromJson(window.localStorage['leagues']);
-    var series = angular.fromJson(window.localStorage['series']);
+    var games = new Array();
+    var leagues = new Array();
+    var series = new Array();
     return {
         all: function () {
             return serieses;
@@ -74,6 +74,8 @@ angular.module('listExample.services', [])
         updateLeagueAvg: function (leagueId) {
             var leagueAvg = 0;
             var gameCount = 0;
+            games = angular.fromJson(localStorage['game']);
+            leagues = angular.fromJson(window.localStorage['leagues']);
             if (typeof games != 'undefined') {
                 for (var i = 0, l = games.length; i < l; i++) {
                     if (games[i].leagueId == leagueId) {
@@ -96,6 +98,8 @@ angular.module('listExample.services', [])
         updateSeriesAvg: function (seriesId) {
             var seriesAvg = 0;
             var gameCount = 0;
+            games = angular.fromJson(localStorage['game']);
+            series = angular.fromJson(window.localStorage['series']);
             if (typeof games != 'undefined') {
                 for (var i = 0, l = games.length; i < l; i++) {
                     if (games[i].seriesId == seriesId) {
@@ -105,7 +109,7 @@ angular.module('listExample.services', [])
                 }
             }
             if (typeof series != 'undefined') {
-                for (var j = 0; j < leagues.length; j++) {
+                for (var j = 0; j < series.length; j++) {
                     if (series[j].id == seriesId) {
                         series[j].avgScore = Math.floor((seriesAvg / gameCount) * 100) / 100;
                         break;
