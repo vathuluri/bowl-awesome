@@ -1,27 +1,14 @@
 angular.module('listExample.controllers', [])
 
-.controller('IndexCtrl', function ($scope, ActionSheet, Modal, $location) {
+.controller('IndexCtrl', function ($scope, ActionSheet, Modal, $location, AvgScoreService) {
 
-    // "MovieService" is a service returning mock data (services.js)
-    // the returned data from the service is placed into this 
-    // controller's scope so the template can render the data
     $scope.leagues = angular.fromJson(window.localStorage['leagues']);
-
-    $scope.AvgLeagueScore = function (leagueId, seriesId) {
-        var leagues = angular.fromJson(window.localStorage['leagues']);
-        var series = angular.fromJson(window.localStorage['series']);
-        
-    };
-
     $scope.title = "Leagues";
 
-    // Load the modal from the given template URL
     Modal.fromTemplateUrl('modal.html', function (modal) {
         $scope.modal = modal;
     }, {
-        // Use our scope for the scope of the modal to keep it simple
         scope: $scope,
-        // The animation we want to use for the modal entrance
         animation: 'slide-in-up'
     });
 
@@ -64,10 +51,10 @@ angular.module('listExample.controllers', [])
         $location.path('/seriesDetails/' + id);
     };
 
-    
+
 })
 
-.controller('GameDetailCtrl', function ($scope, $routeParams, GameService, Modal) {
+.controller('GameDetailCtrl', function ($scope, $routeParams, GameService, Modal, AvgScoreService) {
     // "MovieService" is a service returning mock data (services.js)
     $scope.games = GameService.get($routeParams.leagueId, $routeParams.seriesId);
     $scope.title = "Games";
@@ -104,6 +91,8 @@ angular.module('listExample.controllers', [])
         record.gameScore = "";
         $scope.games = GameService.get($routeParams.leagueId, $routeParams.seriesId);
         $scope.modal.hide();
+        AvgScoreService.updateLeagueAvg($routeParams.leagueId);
+        AvgScoreService.updateSeriesAvg($routeParams.seriesId);
     };
 })
 
