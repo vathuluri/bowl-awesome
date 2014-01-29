@@ -149,6 +149,7 @@ angular.module('listExample.controllers', [])
         $location.path('/league/' + seriesObj.leagueId + '/series/' + seriesObj.id + '/gameDetails/');
 
     };
+    
 })
 
 .controller('ModalCtrl', function ($scope, Modal) {

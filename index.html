@@ -45,28 +45,36 @@
     -->
 
     <script type="text/ng-template" id="/index.html">
-      <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
-        <content has-header="true">
-           <div class="list" >
-             <div class="item item-divider">
-                  League Name
-                 <span class="item-note">
-         <i class="icon ion-speedometer assertive"></i> 
-                    Avg Score 
-                </span>
-              </div>
-        <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
-        <span style="display:none"></span> 
-          {{league.name}}
-          <span class="item-note"> {{league.avgScore}}</span>
-        </a>
-        </div>  
-        </content>
-      </nav-page>
+      
+        <side-menus>
+          <!-- Center content -->
+             <pane side-menu-content>
+                <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
+                         <content has-header="true">
+                           <div class="list" >
+                             <div class="item item-divider">
+                                  League Name
+                                 <span class="item-note">
+                                <i class="icon ion-speedometer assertive"></i> 
+                                    Avg Score 
+                                </span>
+                              </div>
+                        <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
+                        <span style="display:none"></span> 
+                          {{league.name}}
+                          <span class="item-note"> {{league.avgScore}}</span>
+                        </a>
+                        </div>  
+                        </content>
+              </nav-page>
+            </pane>
+
+        
+
     </script>
 
     <script type="text/ng-template" id="/seriesDetails.html">
-      <nav-page title="title" right-buttons="rightButtons">     
+      <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">     
         <content has-header="true">
            <div class="list">
               <div class="item item-divider">
@@ -88,7 +96,7 @@
     </script>
 
     <script type="text/ng-template" id="/gameDetails.html">
-      <nav-page ng-controller="GameDetailCtrl" title="title"  right-buttons="rightButtons" >
+      <nav-page ng-controller="GameDetailCtrl" title="title" left-buttons="leftButtons"  right-buttons="rightButtons" >
         <content has-header="true">
            <div class="list">
               <div class="item item-divider">
