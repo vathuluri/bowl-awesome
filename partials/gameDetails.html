@@ -1,0 +1,19 @@
+﻿<nav-page ng-controller="GameDetailCtrl" title="title" left-buttons="leftButtons" right-buttons="rightButtons">
+    <content has-header="true">
+        <div class="list">
+            <div class="item item-divider">
+                Game
+                <span class="item-note">
+                        Score
+                </span>
+            </div>
+            <a class="item" ng-repeat="game in games" ng-click="doRedirect(seriesObj)">
+            <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
+                Game : {{game.game}}
+                <span class="item-note">
+                    {{game.score}}
+                </span>
+            </a>
+        </div> 
+    </content>
+ </nav-page>

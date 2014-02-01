@@ -40,32 +40,13 @@ angular.module('listExample', ['ionic', 'ngRoute', 'ngAnimate', 'listExample.ser
 
 .config(function ($routeProvider, $locationProvider) {
 
-    // Set up the initial routes that our app will respond to.
-    // These are then tied up to our nav router which animates and
-    // updates a navigation bar
-    $routeProvider.when('/', {
-        templateUrl: '/index.html',
-        controller: 'IndexCtrl'
-    });
-
-    // if the url matches something like /movie/88 then this route
-    // will fire off the MovieDetailCtrl (controllers.js)
-    $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', {
-        templateUrl: '/gameDetails.html',
-        controller: 'GameDetailCtrl'
-    });
-
-    // if the url matches something like /movie/88 then this route
-    // will fire off the MovieDetailCtrl (controllers.js)
-    $routeProvider.when('/seriesDetails/:id', {
-        templateUrl: '/seriesDetails.html',
-        controller: 'SeriesDetailsCtrl'
-    });
+    $routeProvider.when('/', {templateUrl: 'partials/home.html',controller: 'IndexCtrl'});
+    $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', { templateUrl: 'partials/gameDetails.html', controller: 'GameDetailCtrl' });
+    $routeProvider.when('/seriesDetails/:id', { templateUrl: 'partials/seriesDetails.html', controller: 'SeriesDetailsCtrl' });
+    $routeProvider.when('/test', {templateUrl: 'partials/testhtml.html',controller: 'GameDetailCtrl'});
 
     // if none of the above routes are met, use this fallback
-    $routeProvider.otherwise({
-        redirectTo: '/'
-    });
+    $routeProvider.otherwise({redirectTo: '/'});
 
 });
 

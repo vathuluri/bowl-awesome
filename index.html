@@ -2,9 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Ionic List Example</title>
+    <title>Bowl Awesome : A simple bowling stats tracker</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-
 
     <link href="css/ionic.css" rel="stylesheet">
 
@@ -20,14 +19,23 @@
     <script src="js/ionic-angular.js"></script>
 
     <!-- your app's script -->
+    <script src="js/oAuth.js"></script>
+    <script src="js/googleLogin.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="https://apis.google.com/js/api.js"
+        type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        //<![CDATA[
 
+        gapi.load('auth', init);
+        //]]>
+    </script>
 </head>
 
 <body ng-app="listExample" nav-router animation="slide-left-right-ios7">
-
     <!-- The nav bar that will be updated as we navigate -->
     <nav-bar
         class="nav-title-slide-ios7"
@@ -38,89 +46,11 @@
     <!-- where the content of each page will be rendered -->
     <ng-view></ng-view>
 
-
-    <!-- 
-      Belows are examples of using inline angular templates:
-      http://docs.angularjs.org/api/ng.directive:script
-    -->
-
-    <script type="text/ng-template" id="/index.html">
-      
-        <side-menus>
-          <!-- Center content -->
-             <pane side-menu-content>
-                <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
-                         <content has-header="true">
-                           <div class="list" >
-                             <div class="item item-divider">
-                                  League Name
-                                 <span class="item-note">
-                                <i class="icon ion-speedometer assertive"></i> 
-                                    Avg Score 
-                                </span>
-                              </div>
-                        <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
-                        <span style="display:none"></span> 
-                          {{league.name}}
-                          <span class="item-note"> {{league.avgScore}}</span>
-                        </a>
-                        </div>  
-                        </content>
-              </nav-page>
-            </pane>
-
-        
-
-    </script>
-
-    <script type="text/ng-template" id="/seriesDetails.html">
-      <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">     
-        <content has-header="true">
-           <div class="list">
-              <div class="item item-divider">
-                Date
-             <span class="item-note">
-                   <i class="icon ion-ios7-speedometer-outline assertive"></i> Avg Series Score
-             </span>
-              </div>
-             <a class="item" ng-repeat="seriesObj in serieses" ng-click="doRedirect(seriesObj)">
-                <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
-                {{seriesObj.name}}
-                <span class="item-note">
-                  {{seriesObj.avgScore}}
-                </span>
-             </a>
-            </div> 
-    </content>
-      </nav-page>
-    </script>
-
-    <script type="text/ng-template" id="/gameDetails.html">
-      <nav-page ng-controller="GameDetailCtrl" title="title" left-buttons="leftButtons"  right-buttons="rightButtons" >
-        <content has-header="true">
-           <div class="list">
-              <div class="item item-divider">
-                Game
-             <span class="item-note">
-                     Score
-             </span>
-              </div>
-             <a class="item" ng-repeat="game in games" ng-click="doRedirect(seriesObj)">
-                <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
-                Game : {{game.game}}
-                <span class="item-note">
-                  {{game.score}}
-                </span>
-             </a>
-            </div> </content>
-      </nav-page>  
-    </script>
-
     <script id="modal.html" type="text/ng-template">
       <div class="modal">
         <header class="padding bar bar-header bar-positive">
           <h1 class="title">Add New League</h1>
-          <button class="button button-clear" ng-click="closeModal()">Cancel</button>
+          <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-ios7-close-outline"></i></button>
         </header>
         <content has-header="true">
           <form ng-submit="createNewLeague(record)">
@@ -142,7 +72,7 @@
       <div class="modal">
         <header class="padding bar bar-header bar-positive">
           <h1 class="title">New Series</h1>
-          <button class="button button-clear" ng-click="closeModal()">Cancel</button>
+          <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-ios7-close-outline"></i></button>
         </header>
         <content has-header="true">
           <form ng-submit="createNewSeries(record)">
@@ -164,7 +94,7 @@
       <div class="modal">
         <header class="padding bar bar-header bar-positive">
           <h1 class="title">New Series</h1>
-          <button class="button button-clear" ng-click="closeModal()">Cancel</button>
+          <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-ios7-close-outline"></i></button>
         </header>
         <content has-header="true">
           <form ng-submit="createNewGame(record)">

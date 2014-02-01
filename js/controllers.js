@@ -16,9 +16,25 @@ angular.module('listExample.controllers', [])
     $scope.rightButtons = [
   {
       type: 'button-clear',
-      content: '<i class="icon ion-plus"></i>',
+      content: '<i class="icon ion-ios7-plus-outline"></i>',
       tap: function (e) {
-          $scope.modal.show();
+          OAuth.initialize('hkfEWjkRun-sqqYo2SCPSn035S8');
+          //OAuth.popup('facebook', function (err, result) { // or OAuth.callback
+          //    // handle error with err
+          //    // call the API with the jQuery's $.ajax style:
+          //    result.get('/me').done(function (data) {
+          //        // data is the API call's response. e.g. data.name for your facebook's fullname.
+          //    });
+          //});
+          //Using popup (option 1)
+          OAuth.popup('google', function (error, result) {
+              alert(result.access_token);
+              //handle error with error
+              //use result.access_token in your API request
+          });
+
+         
+          //$scope.modal.show();
       }
   }];
 
@@ -51,10 +67,9 @@ angular.module('listExample.controllers', [])
         $location.path('/seriesDetails/' + id);
     };
 
-
 })
 
-.controller('GameDetailCtrl', function ($scope, $routeParams, GameService, Modal, AvgScoreService) {
+.controller('GameDetailCtrl', function ($scope, $routeParams, GameService, Modal, AvgScoreService, $location) {
     // "MovieService" is a service returning mock data (services.js)
     $scope.games = GameService.get($routeParams.leagueId, $routeParams.seriesId);
     $scope.title = "Games";
@@ -62,7 +77,7 @@ angular.module('listExample.controllers', [])
     $scope.rightButtons = [
       {
           type: 'button-clear',
-          content: '<i class="icon ion-plus"></i>',
+          content: '<i class="icon ion-ios7-plus-outline"></i>',
           tap: function (e) {
               $scope.modal.show();
           }
@@ -94,6 +109,15 @@ angular.module('listExample.controllers', [])
         AvgScoreService.updateLeagueAvg($routeParams.leagueId);
         AvgScoreService.updateSeriesAvg($routeParams.seriesId);
     };
+    
+    $scope.closeModal = function () {
+        $scope.modal.hide();
+    };
+    
+    $scope.doRedirect = function (seriesObj) {
+        $location.path('/test');
+
+    };
 })
 
 .controller('SeriesDetailsCtrl', function ($scope, $routeParams, SeriesService, Modal, $location) {
@@ -114,7 +138,7 @@ angular.module('listExample.controllers', [])
     $scope.rightButtons = [
      {
          type: 'button-clear',
-         content: '<i class="icon ion-plus"></i>',
+         content: '<i class="icon ion-ios7-plus-outline"></i>',
          tap: function (e) {
              $scope.modal.show();
              //alert('Hello Series details controller');
@@ -169,5 +193,41 @@ angular.module('listExample.controllers', [])
     };
     $scope.closeModal = function () {
         $scope.modal.hide();
+    };
+})
+
+.controller('footerCtrl', function ($scope) {
+    OAuth.initialize('hkfEWjkRun-sqqYo2SCPSn035S8');
+    $scope.googlePlusLogin = function () {
+        
+        OAuth.popup('google', function (error, result) {
+            var xhr = new XMLHttpRequest();
+            //var oauthToken = gapi.auth.getToken();
+            xhr.open('GET',
+              'https://www.googleapis.com/plus/v1/people/rain2showers@gmail.com/people/visible');
+            xhr.setRequestHeader('Authorization',
+              'Bearer ' + result.access_token);
+            xhr.send();
+            $scope.$apply(function () {
+                $scope.username = "Timeout called!";
+            });
+            var token = result.access_token;
+            alert(xhr.responseText);
+            //handle error with error
+            //use result.access_token in your API request
+        });
+        
+    };
+    $scope.facebookLogin = function () {
+        OAuth.popup('facebook', function (err, result) { // or OAuth.callback
+            // handle error with err
+            // call the API with the jQuery's $.ajax style:
+            result.get('/me').done(function (data) {
+                // data is the API call's response. e.g. data.name for your facebook's fullname.
+                $scope.$apply(function () {
+                    $scope.username = data.name;
+                });
+            });
+        });
     };
 });

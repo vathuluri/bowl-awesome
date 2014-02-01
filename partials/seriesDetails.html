@@ -1,0 +1,19 @@
+﻿<nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">     
+    <content has-header="true">
+        <div class="list">
+            <div class="item item-divider">
+                Date
+                <span class="item-note">
+                    <i class="icon ion-ios7-speedometer-outline assertive"></i> Avg Series Score
+                </span>
+            </div>
+            <a class="item" ng-repeat="seriesObj in serieses" ng-click="doRedirect(seriesObj)">
+                <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
+                {{seriesObj.name}}
+                <span class="item-note">
+                    {{seriesObj.avgScore}}
+                </span>
+            </a>
+        </div> 
+    </content>
+</nav-page>
