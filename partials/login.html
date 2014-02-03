@@ -1,0 +1,18 @@
+﻿<nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
+    <content has-header="true">
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" placeholder="User Name" ng-model='user.username'>
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model='user.password'>
+            </label>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-positive" ng-click="doLogin(user)">Submit</button>
+        </div>
+        <div class="padding">
+        <button class="button button-block button-positive">Submit</button>
+      </div>
+   </content>
+</nav-page>

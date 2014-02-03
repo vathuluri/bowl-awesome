@@ -3,7 +3,7 @@
 // the 2nd parameter is an array or 'requires'
 // 'listExample.services' is found in services.js
 // 'listExample.controllers' is found in controllers.js
-angular.module('listExample', ['ionic', 'ngRoute', 'ngAnimate', 'listExample.services', 'listExample.controllers'])
+angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.services', 'bowlawesome.controllers'])
 
 .factory('Projects', function () {
     return {
@@ -43,7 +43,7 @@ angular.module('listExample', ['ionic', 'ngRoute', 'ngAnimate', 'listExample.ser
     $routeProvider.when('/', {templateUrl: 'partials/home.html',controller: 'IndexCtrl'});
     $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', { templateUrl: 'partials/gameDetails.html', controller: 'GameDetailCtrl' });
     $routeProvider.when('/seriesDetails/:id', { templateUrl: 'partials/seriesDetails.html', controller: 'SeriesDetailsCtrl' });
-    $routeProvider.when('/test', {templateUrl: 'partials/testhtml.html',controller: 'GameDetailCtrl'});
+    $routeProvider.when('/login', {templateUrl: 'partials/login.html',controller: 'LoginCtrl'});
 
     // if none of the above routes are met, use this fallback
     $routeProvider.otherwise({redirectTo: '/'});

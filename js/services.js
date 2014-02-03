@@ -1,4 +1,4 @@
-angular.module('listExample.services', [])
+angular.module('bowlawesome.services', [])
 
 /**
  * A simple example service that returns some data.
