@@ -178,7 +178,7 @@ angular.module('bowlawesome.controllers', [])
             $scope.modal.hide();
         };
     })
-    .controller('footerCtrl', function ($scope, $location) {
+    .controller('footerCtrl', function ($scope, $location,constants) {
         OAuth.initialize('hkfEWjkRun-sqqYo2SCPSn035S8');
         $scope.googlePlusLogin = function () {
 
@@ -215,6 +215,12 @@ angular.module('bowlawesome.controllers', [])
         $scope.login = function () {
             $location.path('/login');
         };
+        if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
+            $scope.IsUserLoggedIn = constants.userLoggedIn;
+        } else {
+            $scope.IsUserLoggedIn = 'false';
+        }
+
     })
     .controller('LoginCtrl', function ($scope, $location, constants, $http) {
         $scope.doLogin = function (user) {
@@ -233,7 +239,7 @@ angular.module('bowlawesome.controllers', [])
                         user.isLogged = true;
                         user.username = data.username;
                         localStorage["authToken"] = data.token;
-                        $location.path("/dashboard");
+                        $location.path("/");
                     } else {
                         user.isLogged = false;
                         user.username = '';

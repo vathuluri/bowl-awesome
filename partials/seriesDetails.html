@@ -17,3 +17,7 @@
         </div> 
     </content>
 </nav-page>
+<div ng-controller="footerCtrl">
+    <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
+    <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
+</div>

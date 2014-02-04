@@ -4,11 +4,11 @@
             <div class="item item-divider">
                 Game
                 <span class="item-note">
-                        Score
+                    Score
                 </span>
             </div>
             <a class="item" ng-repeat="game in games" ng-click="doRedirect(seriesObj)">
-            <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
+                <!--<i class="icon ion-ios7-heart-outline assertive"></i>-->
                 Game : {{game.game}}
                 <span class="item-note">
                     {{game.score}}
@@ -16,4 +16,8 @@
             </a>
         </div> 
     </content>
- </nav-page>
+</nav-page>
+<div ng-controller="footerCtrl">
+    <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
+    <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
+</div>

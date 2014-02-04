@@ -1,26 +1,29 @@
 ﻿<side-menus>
     <!-- Center content -->
-        <pane side-menu-content>
-            <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
-                    <content has-header="true" on-refresh="onRefresh()" scroll="true">
-                        <scroll-refresher>
-                            <div class="list" >
-                                <div class="item item-divider">
-                                    League Name
-                                    <span class="item-note">
+    <pane side-menu-content>
+        <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
+            <content has-header="true" on-refresh="onRefresh()" scroll="true">
+                <scroll-refresher>
+                    <div class="list" >
+                        <div class="item item-divider">
+                            League Name
+                            <span class="item-note">
                                 <i class="icon ion-speedometer assertive"></i> 
-                                    Avg Score 
-                                </span>
-                                </div>
-                            <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
+                                Avg Score 
+                            </span>
+                        </div>
+                        <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
                             <span style="display:none"></span> 
-                                {{league.name}}
-                                <span class="item-note"> {{league.avgScore}}</span>
-                            </a>
-                        </div> 
-                    </scroll-refresher>
-                </content>
-            </nav-page>
-        </pane> 
- </side-menus>
-<div ng-controller="footerCtrl" ng-include="'partials/footer-beforelogin.html'"></div>
+                            {{league.name}}
+                            <span class="item-note"> {{league.avgScore}}</span>
+                        </a>
+                    </div> 
+                </scroll-refresher>
+            </content>
+        </nav-page>
+    </pane> 
+</side-menus>
+<div ng-controller="footerCtrl">
+    <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
+    <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
+</div>
