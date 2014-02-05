@@ -104,10 +104,12 @@ angular.module('bowlawesome.controllers', [])
         };
     })
     .controller('SeriesDetailsCtrl', function ($scope, $routeParams, SeriesService, Modal, $location) {
-        //var series = localStorage['series'].get($routeParams.id);
         $scope.serieses = SeriesService.get($routeParams.id);
         $scope.leagueId = $routeParams.id;
         $scope.title = "League Summary";
+        $scope.record = {
+            seriesName : new XDate().toString("MMM d, yyyy")
+        };
 
         Modal.fromTemplateUrl('seriesModal.html', function (modal) {
             $scope.modal = modal;
@@ -139,7 +141,7 @@ angular.module('bowlawesome.controllers', [])
                 series.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.seriesName, avgScore: 0, leagueId: $scope.leagueId });
             }
             window.localStorage['series'] = angular.toJson(series);
-            record.seriesName = "";
+            record.seriesName = new XDate();
             $scope.series = angular.fromJson(window.localStorage['series']);
             $scope.serieses = SeriesService.get($routeParams.id);
             $scope.modal.hide();
@@ -158,6 +160,7 @@ angular.module('bowlawesome.controllers', [])
 
         };
 
+        //$scope.record.;
     })
     .controller('ModalCtrl', function ($scope, Modal) {
 
