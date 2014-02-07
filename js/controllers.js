@@ -1,16 +1,14 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, ActionSheet, Modal, $location, AvgScoreService, constants) {
-
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, constants) {
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
 
-        Modal.fromTemplateUrl('modal.html', function (modal) {
+        $ionicModal.fromTemplateUrl('modal.html', function (modal) {
             $scope.modal = modal;
         }, {
             scope: $scope,
             animation: 'slide-in-up'
         });
-
 
         $scope.rightButtons = [
             {
@@ -51,8 +49,54 @@ angular.module('bowlawesome.controllers', [])
             $location.path('/seriesDetails/' + id);
         };
 
+        $scope.doActions = function (leagueIndex) {
+            
+            // Show the action sheet
+            $ionicActionSheet.show({
+                 //   buttons: [
+                 //{ text: 'Edit' },
+                 //   ],
+                destructiveText: 'Delete',
+                cancelText: 'Cancel',
+                cancel: function () {
+                },
+                buttonClicked: function (index) {
+                    console.log('BUTTON CLICKED', index);
+                    
+                    return true;
+                },
+                destructiveButtonClicked: function () {
+                    //var id = league.id;
+                    var r = confirm("Are you sure you want to delete ?");
+                    if (r == true) {
+                        var leagues = angular.fromJson(window.localStorage['leagues']);
+                        if (leagues.length != null) {
+                            leagues.splice(leagueIndex, 1);
+                            window.localStorage['leagues'] = angular.toJson(leagues);
+                        }
+
+                    }
+                    else {
+                        alert("You pressed Cancel!");
+                    }
+                    $scope.leagues = angular.fromJson(window.localStorage['leagues']);
+                    return true;
+                }
+            });
+
+        };
+
+        $scope.leftButtons = [
+           {
+               type: 'button-clear',
+               content: '<i class="icon ion-navicon"></i>',
+               tap: function (e) {
+                   $scope.sideMenuController.toggleLeft();
+               }
+           }];
+
     })
-    .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, Modal, AvgScoreService, $location) {
+    .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location) {
         // "MovieService" is a service returning mock data (services.js)
         $scope.games = GameService.get($routeParams.leagueId, $routeParams.seriesId);
         $scope.title = "Games";
@@ -66,7 +110,7 @@ angular.module('bowlawesome.controllers', [])
                 }
             }];
 
-        Modal.fromTemplateUrl('gameModal.html', function (modal) {
+        $ionicModal.fromTemplateUrl('gameModal.html', function (modal) {
             $scope.modal = modal;
         }, {
             // Use our scope for the scope of the modal to keep it simple
@@ -102,14 +146,25 @@ angular.module('bowlawesome.controllers', [])
             $location.path('/test');
 
         };
+
+        $scope.leftButtons = [
+           {
+               type: 'button-clear',
+               content: '<i class="icon ion-navicon"></i>',
+               tap: function (e) {
+                   $scope.modal.show();
+               }
+           }];
     })
-    .controller('SeriesDetailsCtrl', function ($scope, $routeParams, SeriesService, Modal, $location) {
-        //var series = localStorage['series'].get($routeParams.id);
+    .controller('SeriesDetailsCtrl', function ($scope, $routeParams, SeriesService, $ionicModal, $location) {
         $scope.serieses = SeriesService.get($routeParams.id);
         $scope.leagueId = $routeParams.id;
         $scope.title = "League Summary";
+        $scope.record = {
+            seriesName: new XDate().toString("MMM d, yyyy")
+        };
 
-        Modal.fromTemplateUrl('seriesModal.html', function (modal) {
+        $ionicModal.fromTemplateUrl('seriesModal.html', function (modal) {
             $scope.modal = modal;
         }, {
             // Use our scope for the scope of the modal to keep it simple
@@ -139,7 +194,7 @@ angular.module('bowlawesome.controllers', [])
                 series.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.seriesName, avgScore: 0, leagueId: $scope.leagueId });
             }
             window.localStorage['series'] = angular.toJson(series);
-            record.seriesName = "";
+            record.seriesName = new XDate();
             $scope.series = angular.fromJson(window.localStorage['series']);
             $scope.serieses = SeriesService.get($routeParams.id);
             $scope.modal.hide();
@@ -158,6 +213,7 @@ angular.module('bowlawesome.controllers', [])
 
         };
 
+        //$scope.record.;
     })
     .controller('ModalCtrl', function ($scope, Modal) {
 
@@ -178,7 +234,7 @@ angular.module('bowlawesome.controllers', [])
             $scope.modal.hide();
         };
     })
-    .controller('footerCtrl', function ($scope, $location,constants) {
+    .controller('footerCtrl', function ($scope, $location, constants) {
         OAuth.initialize('hkfEWjkRun-sqqYo2SCPSn035S8');
         $scope.googlePlusLogin = function () {
 
@@ -252,5 +308,47 @@ angular.module('bowlawesome.controllers', [])
                     $('.js-loading-bar').modal('hide');
                     $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
                 });
+        };
+    })
+    .controller('TestCtrl', function ($scope, $ionicActionSheet, $location, constants, $http) {
+        $scope.show = function () {
+
+            // Show the action sheet
+            $ionicActionSheet.show({
+
+                // The various non-destructive button choices
+                buttons: [
+                  { text: 'Share' },
+                  { text: 'Move' },
+                ],
+
+                // The text of the red destructive button
+                destructiveText: 'Delete',
+
+                // The title text at the top
+                titleText: 'Modify your album',
+
+                // The text of the cancel button
+                cancelText: 'Cancel',
+
+                // Called when the sheet is cancelled, either from triggering the
+                // cancel button, or tapping the backdrop, or using escape on the keyboard
+                cancel: function () {
+                },
+
+                // Called when one of the non-destructive buttons is clicked, with
+                // the index of the button that was clicked. Return
+                // "true" to tell the action sheet to close. Return false to not close.
+                buttonClicked: function (index) {
+                    return true;
+                },
+
+                // Called when the destructive button is clicked. Return true to close the
+                // action sheet. False to keep it open
+                destructiveButtonClicked: function () {
+                    return true;
+                }
+            });
+
         };
     });

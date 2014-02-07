@@ -3,7 +3,7 @@
 // the 2nd parameter is an array or 'requires'
 // 'listExample.services' is found in services.js
 // 'listExample.controllers' is found in controllers.js
-angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.services', 'bowlawesome.controllers'])
+angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.services', 'bowlawesome.controllers', 'bowlawesome.directives'])
 
 .factory('Projects', function () {
     return {
@@ -43,7 +43,8 @@ angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.ser
     $routeProvider.when('/', {templateUrl: 'partials/home.html',controller: 'IndexCtrl'});
     $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', { templateUrl: 'partials/gameDetails.html', controller: 'GameDetailCtrl' });
     $routeProvider.when('/seriesDetails/:id', { templateUrl: 'partials/seriesDetails.html', controller: 'SeriesDetailsCtrl' });
-    $routeProvider.when('/login', {templateUrl: 'partials/login.html',controller: 'LoginCtrl'});
+    $routeProvider.when('/login', { templateUrl: 'partials/login.html', controller: 'LoginCtrl' });
+    $routeProvider.when('/test', { templateUrl: 'partials/test.html', controller: 'TestCtrl' });
 
     // if none of the above routes are met, use this fallback
     $routeProvider.otherwise({redirectTo: '/'});

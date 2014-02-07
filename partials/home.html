@@ -1,9 +1,13 @@
-﻿<side-menus>
-    <!-- Center content -->
-    <pane side-menu-content>
-        <nav-page title="title" left-buttons="leftButtons" right-buttons="rightButtons">
-            <content has-header="true" on-refresh="onRefresh()" scroll="true">
-                <scroll-refresher>
+﻿<nav-view animation="slide-left-right">
+    <header-bar
+  title="title"
+  left-buttons="leftButtons"
+  right-buttons="rightButtons"
+  type="bar-positive"
+  align-title="center">
+</header-bar>
+    <content has-header="true">
+               
                     <div class="list" >
                         <div class="item item-divider">
                             League Name
@@ -12,18 +16,16 @@
                                 Avg Score 
                             </span>
                         </div>
-                        <a class="item " ng-repeat="league in leagues" ng-click="doRedirect(league)" >
-                            <span style="display:none"></span> 
-                            {{league.name}}
-                            <span class="item-note"> {{league.avgScore}}</span>
+                        <a class="item item-icon-right" ng-repeat="league in leagues" >
+                            
+                            <span ng-click="doRedirect(league)" >{{league.name}}
+                            <span class="item-note"> {{league.avgScore}}</span></span>
+                        <span ng-click='doActions($index)'><i class="icon ion-ios7-more-outline"></i></span>
                         </a>
-                    </div> 
-                </scroll-refresher>
-            </content>
-        </nav-page>
-    </pane> 
-</side-menus>
+                    </div>                     
+               </content>
+        </nav-view>
 <div ng-controller="footerCtrl">
     <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
-    <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
+    <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-afterlogin.html'"></div>
 </div>
