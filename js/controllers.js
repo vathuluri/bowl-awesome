@@ -50,19 +50,19 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.doActions = function (leagueIndex) {
-            
+
             // Show the action sheet
             $ionicActionSheet.show({
-                 //   buttons: [
-                 //{ text: 'Edit' },
-                 //   ],
+                //   buttons: [
+                //{ text: 'Edit' },
+                //   ],
                 destructiveText: 'Delete',
                 cancelText: 'Cancel',
                 cancel: function () {
                 },
                 buttonClicked: function (index) {
                     console.log('BUTTON CLICKED', index);
-                    
+
                     return true;
                 },
                 destructiveButtonClicked: function () {
@@ -148,13 +148,14 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.leftButtons = [
-           {
-               type: 'button-clear',
-               content: '<i class="icon ion-navicon"></i>',
-               tap: function (e) {
-                   $scope.modal.show();
-               }
-           }];
+            {
+                type: 'button-clear',
+                content: '<i class="icon ion-navicon"></i>',
+                tap: function (e) {
+                    $scope.sideMenuController.toggleLeft();
+                }
+            }];
+
     })
     .controller('SeriesDetailsCtrl', function ($scope, $routeParams, SeriesService, $ionicModal, $location) {
         $scope.serieses = SeriesService.get($routeParams.id);
@@ -213,7 +214,14 @@ angular.module('bowlawesome.controllers', [])
 
         };
 
-        //$scope.record.;
+        $scope.leftButtons = [
+           {
+               type: 'button-clear',
+               content: '<i class="icon ion-navicon"></i>',
+               tap: function (e) {
+                   $scope.sideMenuController.toggleLeft();
+               }
+           }];
     })
     .controller('ModalCtrl', function ($scope, Modal) {
 
