@@ -44,6 +44,9 @@ angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.ser
     $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', { templateUrl: 'partials/gameDetails.html', controller: 'GameDetailCtrl' });
     $routeProvider.when('/seriesDetails/:id', { templateUrl: 'partials/seriesDetails.html', controller: 'SeriesDetailsCtrl' });
     $routeProvider.when('/login', { templateUrl: 'partials/login.html', controller: 'LoginCtrl' });
+    $routeProvider.when('/friends', { templateUrl: 'partials/friends.html', controller: 'FriendsCtrl' });
+    $routeProvider.when('/settings', { templateUrl: 'partials/settings.html', controller: 'SettingsCtrl' });
+    $routeProvider.when('/notifications', { templateUrl: 'partials/notifications.html', controller: 'NotificationsCtrl' });
     $routeProvider.when('/test', { templateUrl: 'partials/test.html', controller: 'TestCtrl' });
 
     // if none of the above routes are met, use this fallback

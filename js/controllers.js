@@ -2,13 +2,19 @@ angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, constants) {
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
-
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
             $scope.modal = modal;
         }, {
             scope: $scope,
             animation: 'slide-in-up'
         });
+
+        //$ionicModal.fromTemplateUrl('editLeague.html', function (editmodal) {
+        //    $scope.modal = editmodal;
+        //}, {
+        //    scope: $scope,
+        //    animation: 'slide-in-up'
+        //});
 
         $scope.rightButtons = [
             {
@@ -44,25 +50,42 @@ angular.module('bowlawesome.controllers', [])
             $scope.modal.hide();
         };
 
+        $scope.editLeague = function (record) {
+            var leagues;
+
+            if (typeof localStorage["leagues"] != 'undefined') {
+                leagues = angular.fromJson(window.localStorage['leagues']);
+                leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
+            } else {
+                leagues = new Array();
+                leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
+            }
+            window.localStorage['leagues'] = angular.toJson(leagues);
+            record.leagueName = "";
+            $scope.leagues = angular.fromJson(window.localStorage['leagues']);
+            $scope.modal.hide();
+        };
+
         $scope.doRedirect = function (league) {
             var id = league.id;
             $location.path('/seriesDetails/' + id);
         };
 
-        $scope.doActions = function (leagueIndex) {
+        $scope.doActions = function (leagueIndex, league) {
 
             // Show the action sheet
             $ionicActionSheet.show({
-                //   buttons: [
-                //{ text: 'Edit' },
-                //   ],
+                buttons: [
+             { text: 'Edit' },
+                ],
                 destructiveText: 'Delete',
                 cancelText: 'Cancel',
                 cancel: function () {
                 },
                 buttonClicked: function (index) {
                     console.log('BUTTON CLICKED', index);
-
+                    //$scope.editmodal.show();
+                    //$scope.editLeague(league);
                     return true;
                 },
                 destructiveButtonClicked: function () {
@@ -157,7 +180,7 @@ angular.module('bowlawesome.controllers', [])
             }];
 
     })
-    .controller('SeriesDetailsCtrl', function ($scope, $routeParams, SeriesService, $ionicModal, $location) {
+    .controller('SeriesDetailsCtrl', function ($scope, $ionicActionSheet, $routeParams, SeriesService, $ionicModal, $location) {
         $scope.serieses = SeriesService.get($routeParams.id);
         $scope.leagueId = $routeParams.id;
         $scope.title = "League Summary";
@@ -195,7 +218,7 @@ angular.module('bowlawesome.controllers', [])
                 series.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.seriesName, avgScore: 0, leagueId: $scope.leagueId });
             }
             window.localStorage['series'] = angular.toJson(series);
-            record.seriesName = new XDate();
+            record.seriesName = new XDate().toString("MMM d, yyyy");
             $scope.series = angular.fromJson(window.localStorage['series']);
             $scope.serieses = SeriesService.get($routeParams.id);
             $scope.modal.hide();
@@ -222,6 +245,42 @@ angular.module('bowlawesome.controllers', [])
                    $scope.sideMenuController.toggleLeft();
                }
            }];
+
+        $scope.doActions = function (seriesIndex, seriesObj) {
+
+            // Show the action sheet
+            $ionicActionSheet.show({
+                //   buttons: [
+                //{ text: 'Edit' },
+                //   ],
+                destructiveText: 'Delete',
+                cancelText: 'Cancel',
+                cancel: function () {
+                },
+                buttonClicked: function (index) {
+                    console.log('BUTTON CLICKED', index);
+                    $scope.editLeague(seriesObj);
+                    return true;
+                },
+                destructiveButtonClicked: function () {
+                    //var id = league.id;
+                    var r = confirm("Are you sure you want to delete ?");
+                    if (r == true) {
+                        var series = angular.fromJson(window.localStorage['series']);
+                        if (series.length != null) {
+                            series.splice(seriesIndex, 1);
+                            window.localStorage['series'] = angular.toJson(series);
+                        }
+
+                    }
+                    else {
+                        alert("You pressed Cancel!");
+                    }
+                    $scope.serieses = SeriesService.get($routeParams.id);
+                    return true;
+                }
+            });
+        };
     })
     .controller('ModalCtrl', function ($scope, Modal) {
 
@@ -285,6 +344,17 @@ angular.module('bowlawesome.controllers', [])
             $scope.IsUserLoggedIn = 'false';
         }
 
+        $scope.showSettings = function () {
+            $location.path("/settings");
+        };
+
+        $scope.showNotifications = function () {
+            $location.path("/notifications");
+        };
+
+        $scope.showFriends = function () {
+            $location.path("/friends");
+        };
     })
     .controller('LoginCtrl', function ($scope, $location, constants, $http) {
         $scope.doLogin = function (user) {
@@ -359,4 +429,65 @@ angular.module('bowlawesome.controllers', [])
             });
 
         };
-    });
+    })
+    .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
+        $scope.title = "Settings";
+        $scope.leftButtons = [
+              {
+                  type: 'button-clear',
+                  content: '<i class="icon ion-navicon"></i>',
+                  tap: function (e) {
+                      $scope.sideMenuController.toggleLeft();
+                  }
+              }];
+
+        //$scope.rightButtons = [
+        //    {
+        //        type: 'button-clear',
+        //        content: '<i class="icon ion-ios7-people-outline"></i>',
+        //        tap: function (e) {
+        //            $scope.modal.show();
+        //        }
+        //    }];
+    })
+    .controller('NotificationsCtrl', function ($scope, $location, constants, $http) {
+        $scope.title = "Notifications";
+        $scope.leftButtons = [
+              {
+                  type: 'button-clear',
+                  content: '<i class="icon ion-navicon"></i>',
+                  tap: function (e) {
+                      $scope.sideMenuController.toggleLeft();
+                  }
+              }];
+
+        $scope.rightButtons = [
+            {
+                type: 'button-clear',
+                content: '<i class="icon ion-ios7-people-outline"></i>',
+                tap: function (e) {
+                    $scope.modal.show();
+                }
+            }];
+    })
+    .controller('FriendsCtrl', function ($scope, $location, constants, $http) {
+        $scope.title = "Friends";
+        $scope.leftButtons = [
+              {
+                  type: 'button-clear',
+                  content: '<i class="icon ion-navicon"></i>',
+                  tap: function (e) {
+                      $scope.sideMenuController.toggleLeft();
+                  }
+              }];
+
+        $scope.rightButtons = [
+            {
+                type: 'button-clear',
+                content: '<i class="icon ion-ios7-people-outline"></i>',
+                tap: function (e) {
+                    $scope.modal.show();
+                }
+            }];
+
+    })

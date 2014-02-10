@@ -57,16 +57,12 @@
         </header>
         <content has-header="true" scroll="false">
           <list>
-            <item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+            <item>
               title
             </item>
           </list>
         </content>
       </side-menu>
-
-        <!-- Right menu -->
-<!--        <side-menu side="right">
-        </side-menu>-->
     </side-menus>
 
 
@@ -89,6 +85,28 @@
                          </div>
             <div class="padding">
               <button type="submit" class="button button-full button-positive">Create Record</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+
+    <script id="editLeague.html" type="text/ng-template">
+      <div class="editmodal">
+        <header class="padding bar bar-header bar-positive">
+          <h1 class="title">Edit League</h1>
+          <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-ios7-close-outline"></i></button>
+        </header>
+        <content has-header="true">
+          <form ng-submit="editLeague(record)">
+           <div class="list">
+            <label class="item item-input">
+                    <span class="input-label">League Name</span>
+                    <input type="text" ng-model="record.leagueName" placeholder="eg: Summer League">
+                  </label>      
+                         </div>
+            <div class="padding">
+              <button type="submit" class="button button-full button-positive">Edit League</button>
             </div>
           </form>
         </div>
