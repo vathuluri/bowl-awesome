@@ -435,6 +435,38 @@ angular.module('bowlawesome.controllers', [])
         };
     })
     .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
+        
+        $scope.Logout = function () {
+            var logOut = confirm("Are You Sure you want to Logout ?");
+            if (logOut) {
+                localStorage["user.isLogged"] = 'false';
+                localStorage["authToken"] = '';
+                $location.path('/');
+            };
+        };
+
+        $scope.LovethisApp = function() {
+            navigator.notification.confirm(
+                'If you enjoy using Bowl Awesome, would you mind taking a moment to rate it? It won\'t take more than a minute. Thanks for your support!',
+                function(button) {
+                    // yes = 1, no = 2, later = 3
+                    if (button == '1') { // Rate Now
+                        if (device_ios) {
+                            window.open('itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8'); // or itms://
+                        } else if (device_android) {
+                            window.open('market://details?id=com.ionic.bowlAwesome');
+                        } else if (device_bb) {
+                            window.open('http://appworld.blackberry.com/webstore/content/<applicationid>');
+                        }
+                        this.core.rate_app = false;
+                    } else if (button == '2') { // Later
+                        this.core.rate_app_counter = 0;
+                    } else if (button == '3') { // No
+                        this.core.rate_app = false;
+                    }
+                }, 'Rate domainsicle', 'Rate domainsicle,Remind me later, No Thanks');
+        };
+
         $scope.title = "Settings";
         $scope.leftButtons = [
               {

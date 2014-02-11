@@ -20,4 +20,5 @@
     <param name="APP_ID" value="386895214788542" />
     <param name="APP_NAME" value="Bowl­A­w­e­some" />
   </plugin>
+  <plugin name="Notification" value="org.apache.cordova.Notification"/>
 </widget>
