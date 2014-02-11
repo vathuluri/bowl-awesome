@@ -18,6 +18,6 @@
   <icon src="res/icon/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />-->
   <plugin name="com.phonegap.plugins.facebookconnect">
     <param name="APP_ID" value="386895214788542" />
-    <param name="APP_NAME" value="8fc270cc902dc20e3f9ef30cf1f0a8f0" />
+    <param name="APP_NAME" value="Bowl­A­w­e­some" />
   </plugin>
 </widget>

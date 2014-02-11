@@ -142,13 +142,15 @@
           <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-ios7-close-outline"></i></button>
         </header>
         <content has-header="true">
-          <form ng-submit="createNewGame(record)">
+          <form ng-submit="createNewGame(record,selectedItem)">
            <div class="list">
             <label class="item item-input">
                   <span class="input-label">Game</span>
-                      <select>
-                        <option ng-repeat="record in records" ng-model="record.id">{{record.title}}</option>
-                    </select>
+                       <select 
+                           ng-model="selectedItem" 
+                           ng-options="o.id for o in selectables">
+                        </select>
+                     
                   </label>
                  <label class="item item-input">
                     <span class="input-label">Score</span>
