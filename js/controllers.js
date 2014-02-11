@@ -2,19 +2,13 @@ angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, constants) {
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
+        $scope.records = GameNumberService.records;
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
             $scope.modal = modal;
         }, {
             scope: $scope,
             animation: 'slide-in-up'
         });
-
-        //$ionicModal.fromTemplateUrl('editLeague.html', function (editmodal) {
-        //    $scope.modal = editmodal;
-        //}, {
-        //    scope: $scope,
-        //    animation: 'slide-in-up'
-        //});
 
         $scope.rightButtons = [
             {
@@ -119,11 +113,11 @@ angular.module('bowlawesome.controllers', [])
            }];
 
     })
-    .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location) {
+    .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location, GameNumberService) {
         // "MovieService" is a service returning mock data (services.js)
         $scope.games = GameService.get($routeParams.leagueId, $routeParams.seriesId);
         $scope.title = "Games";
-
+        $scope.records = GameNumberService.records();
         $scope.rightButtons = [
             {
                 type: 'button-clear',
@@ -147,10 +141,10 @@ angular.module('bowlawesome.controllers', [])
             if (typeof localStorage['game'] != 'undefined') {
                 game = angular.fromJson(window.localStorage['game']);
                 ;
-                game.push({ id: Math.floor((Math.random() * 1000) + 1), game: record.gameNumber, score: record.gameScore, leagueId: $routeParams.leagueId, seriesId: $routeParams.seriesId });
+                game.push({ id: Math.floor((Math.random() * 1000) + 1), game: record.id, score: record.gameScore, leagueId: $routeParams.leagueId, seriesId: $routeParams.seriesId });
             } else {
                 game = new Array();
-                game.push({ id: Math.floor((Math.random() * 1000) + 1), game: record.gameNumber, score: record.gameScore, leagueId: $routeParams.leagueId, seriesId: $routeParams.seriesId });
+                game.push({ id: Math.floor((Math.random() * 1000) + 1), game: record.id, score: record.gameScore, leagueId: $routeParams.leagueId, seriesId: $routeParams.seriesId });
             }
             window.localStorage['game'] = angular.toJson(game);
             record.gameNumber = "";

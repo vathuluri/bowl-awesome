@@ -145,10 +145,12 @@
           <form ng-submit="createNewGame(record)">
            <div class="list">
             <label class="item item-input">
-                    <span class="input-label">Game</span>
-                    <input type="number" ng-model="record.gameNumber" placeholder="eg: 1">
+                  <span class="input-label">Game</span>
+                      <select>
+                        <option ng-repeat="record in records" ng-model="record.id">{{record.title}}</option>
+                    </select>
                   </label>
-        <label class="item item-input">
+                 <label class="item item-input">
                     <span class="input-label">Score</span>
                     <input type="number" ng-model="record.gameScore" placeholder="eg: 100">
                   </label>            
