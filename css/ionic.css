@@ -4611,7 +4611,7 @@ textarea {
   position: relative;
   overflow: hidden;
   padding: 6px 8px 5px; }
-  .item-input input {
+  .item-input input, .item-input select {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
