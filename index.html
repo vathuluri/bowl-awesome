@@ -34,39 +34,37 @@
 
     <script type="text/javascript" charset="utf-8">
 
-        // Wait for device API libraries to load
+        // Wait for Cordova to load
         //
         document.addEventListener("deviceready", onDeviceReady, false);
 
-        // device APIs are available
+        // Cordova is ready
         //
         function onDeviceReady() {
+            alert("ondevice ready");
+            // find all contacts
             var options = new ContactFindOptions();
-            options.filter = "";
-            filter = ["displayName", "organizations"];
-            navigator.contacts.find(filter, onSuccess, onError, options);
+
+            var fields = ["displayName", "name"];
+            navigator.contacts.find(fields, onSuccess, onError, options);
         }
 
         // onSuccess: Get a snapshot of the current contacts
         //
         function onSuccess(contacts) {
+            alert("ondevice sucesses");
+            var element = document.getElementById('cont');
             for (var i = 0; i < contacts.length; i++) {
-                for (var j = 0; j < contacts[i].organizations.length; j++) {
-                    alert("Pref: " + contacts[i].organizations[j].pref + "\n" +
-                        "Type: " + contacts[i].organizations[j].type + "\n" +
-                        "Name: " + contacts[i].organizations[j].name + "\n" +
-                        "Department: " + contacts[i].organizations[j].department + "\n" +
-                        "Title: " + contacts[i].organizations[j].title);
-                }
+                console.log("Display Name = " + contacts[i].name.formatted);
+                element.innerHTML = '<li><a href="#">' + contacts[i].name.formatted + '</a></li>';
             }
-        };
+        }
 
         // onError: Failed to get the contacts
         //
         function onError(contactError) {
             alert('onError!');
         }
-
 
     </script>
 
@@ -98,9 +96,10 @@
         </header>
         <content has-header="true" scroll="false">
           <list>
-            <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
-              {{item.title}}
-            </item>
+              <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
+                  {{item.title}}
+              </item>
+              <div id="cont"></div>
           </list>
         </content>
       </side-menu>
