@@ -31,6 +31,45 @@
     <script src="https://apis.google.com/js/api.js"
         type="text/javascript">
     </script>
+
+    <script type="text/javascript" charset="utf-8">
+
+        // Wait for device API libraries to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // device APIs are available
+        //
+        function onDeviceReady() {
+            var options = new ContactFindOptions();
+            options.filter = "";
+            filter = ["displayName", "organizations"];
+            navigator.contacts.find(filter, onSuccess, onError, options);
+        }
+
+        // onSuccess: Get a snapshot of the current contacts
+        //
+        function onSuccess(contacts) {
+            for (var i = 0; i < contacts.length; i++) {
+                for (var j = 0; j < contacts[i].organizations.length; j++) {
+                    alert("Pref: " + contacts[i].organizations[j].pref + "\n" +
+                        "Type: " + contacts[i].organizations[j].type + "\n" +
+                        "Name: " + contacts[i].organizations[j].name + "\n" +
+                        "Department: " + contacts[i].organizations[j].department + "\n" +
+                        "Title: " + contacts[i].organizations[j].title);
+                }
+            }
+        };
+
+        // onError: Failed to get the contacts
+        //
+        function onError(contactError) {
+            alert('onError!');
+        }
+
+
+    </script>
+
 </head>
 
 <body ng-app="bowlawesome" nav-router animation="slide-left-right-ios7">
@@ -41,6 +80,8 @@
              back-button-type="button-icon"
              back-button-icon="ion-arrow-left-c"></nav-bar>-->
 
+
+
     <side-menus>
         <!-- Center content -->
         <pane side-menu-content>
@@ -48,7 +89,7 @@
         </pane>
 
         <!-- Left menu -->
-      <side-menu side="left">
+      <side-menu side="left" ng-controller="leftNavCtrl">
         <header class="bar bar-header bar-positive">
           <h1 class="title">Bowl Awesome</h1>
           <!--<button class="button button-icon" ng-click="newProject()">
@@ -57,8 +98,8 @@
         </header>
         <content has-header="true" scroll="false">
           <list>
-            <item>
-              <
+            <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
+              {{item.title}}
             </item>
           </list>
         </content>

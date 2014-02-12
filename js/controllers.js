@@ -1,6 +1,6 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService) {
-        
+
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -343,7 +343,7 @@ angular.module('bowlawesome.controllers', [])
         $scope.login = function () {
             $location.path('/login');
         };
-        
+
         if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
             $scope.IsUserLoggedIn = constants.userLoggedIn;
         } else {
@@ -383,7 +383,7 @@ angular.module('bowlawesome.controllers', [])
                 // The delay in showing the indicator
                 showDelay: 500
             });
-            
+
             var username = user.username;
             var password = user.password;
             var xsrf = $.param({ UserName: username, Password: password, RememberMe: true });
@@ -460,7 +460,7 @@ angular.module('bowlawesome.controllers', [])
         };
     })
     .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
-        
+
         $scope.Logout = function () {
             var logOut = confirm("Are You Sure you want to Logout ?");
             if (logOut) {
@@ -470,7 +470,7 @@ angular.module('bowlawesome.controllers', [])
             };
         };
 
-        $scope.LovethisApp = function() {
+        $scope.LovethisApp = function () {
             var ref = window.open('https://play.google.com/store/apps/details?id=com.ionic.bowlAwesome', '_blank', 'location=yes');
         };
 
@@ -533,4 +533,23 @@ angular.module('bowlawesome.controllers', [])
                 }
             }];
 
+    })
+    .controller('leftNavCtrl', function ($scope, $location) {
+        $scope.items = [{
+            id: 1,
+            title: 'Leagues'
+        }, {
+            id: 2,
+            title: 'Friends'
+        }];
+        $scope.selectNavItem = function(item, $index) {
+            if ($index == 0) {
+                $location.path("/");
+                $scope.sideMenuController.close();
+            }
+            else {
+                $location.path("/friends");
+                $scope.sideMenuController.close();
+            }
+        };
     })
