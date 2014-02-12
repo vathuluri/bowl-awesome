@@ -1,5 +1,6 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, constants) {
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, requestContext) {
+        
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -342,6 +343,7 @@ angular.module('bowlawesome.controllers', [])
         $scope.login = function () {
             $location.path('/login');
         };
+        
         if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
             $scope.IsUserLoggedIn = constants.userLoggedIn;
         } else {
@@ -360,8 +362,28 @@ angular.module('bowlawesome.controllers', [])
             $location.path("/friends");
         };
     })
-    .controller('LoginCtrl', function ($scope, $location, constants, $http) {
+    .controller('LoginCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
         $scope.doLogin = function (user) {
+            // Show the loading overlay and text
+            $scope.loading = $ionicLoading.show({
+
+                // The text to display in the loading indicator
+                content: 'Loading',
+
+                // The animation to use
+                animation: 'fade-in',
+
+                // Will a dark overlay or backdrop cover the entire view
+                showBackdrop: true,
+
+                // The maximum width of the loading indicator
+                // Text will be wrapped if longer than maxWidth
+                maxWidth: 200,
+
+                // The delay in showing the indicator
+                showDelay: 500
+            });
+            
             var username = user.username;
             var password = user.password;
             var xsrf = $.param({ UserName: username, Password: password, RememberMe: true });
@@ -372,6 +394,7 @@ angular.module('bowlawesome.controllers', [])
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
                 .success(function (data, status, headers, config) {
+                    $scope.loading.hide();
                     if (data.status) {
                         localStorage["user.isLogged"] = 'true';
                         user.isLogged = true;
@@ -379,12 +402,14 @@ angular.module('bowlawesome.controllers', [])
                         localStorage["authToken"] = data.token;
                         $location.path("/");
                     } else {
+                        $scope.loading.hide();
                         user.isLogged = false;
                         user.username = '';
                         $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
                     }
                 })
                 .error(function (data, status, headers, config) {
+                    $scope.loading.hide();
                     user.isLogged = false;
                     user.username = '';
                     $('.js-loading-bar').modal('hide');
@@ -446,25 +471,7 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.LovethisApp = function() {
-            navigator.notification.confirm(
-                'If you enjoy using Bowl Awesome, would you mind taking a moment to rate it? It won\'t take more than a minute. Thanks for your support!',
-                function(button) {
-                    // yes = 1, no = 2, later = 3
-                    if (button == '1') { // Rate Now
-                        if (device_ios) {
-                            window.open('itms-apps://itunes.apple.com/us/app/domainsicle-domain-name-search/id511364723?ls=1&mt=8'); // or itms://
-                        } else if (device_android) {
-                            window.open('market://details?id=com.ionic.bowlAwesome');
-                        } else if (device_bb) {
-                            window.open('http://appworld.blackberry.com/webstore/content/<applicationid>');
-                        }
-                        this.core.rate_app = false;
-                    } else if (button == '2') { // Later
-                        this.core.rate_app_counter = 0;
-                    } else if (button == '3') { // No
-                        this.core.rate_app = false;
-                    }
-                }, 'Rate domainsicle', 'Rate domainsicle,Remind me later, No Thanks');
+            var ref = window.open('https://play.google.com/store/apps/details?id=com.ionic.bowlAwesome', '_blank', 'location=yes');
         };
 
         $scope.title = "Settings";
