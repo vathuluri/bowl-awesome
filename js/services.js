@@ -3,14 +3,14 @@ angular.module('bowlawesome.services', [])
 /**
  * A simple example service that returns some data.
  */
-    .factory('SeriesService', function() {
+    .factory('SeriesService', function () {
         var serieses = angular.fromJson(localStorage['series']);
 
         return {
-            all: function() {
+            all: function () {
                 return serieses;
             },
-            get: function(leagueId) {
+            get: function (leagueId) {
                 // Simple index lookup
                 serieses = angular.fromJson(localStorage['series']);
                 var seriesesByLeague = [];
@@ -25,14 +25,14 @@ angular.module('bowlawesome.services', [])
             }
         };
     })
-    .factory('GameService', function() {
+    .factory('GameService', function () {
         var games = angular.fromJson(localStorage['game']);
 
         return {
-            all: function() {
+            all: function () {
                 return serieses;
             },
-            get: function(leagueId, seriesId) {
+            get: function (leagueId, seriesId) {
                 // Simple index lookup
                 games = angular.fromJson(localStorage['game']);
                 var gamesBySeries = [];
@@ -47,15 +47,15 @@ angular.module('bowlawesome.services', [])
             }
         };
     })
-    .factory('AvgScoreService', function() {
+    .factory('AvgScoreService', function () {
         var games = new Array();
         var leagues = new Array();
         var series = new Array();
         return {
-            all: function() {
+            all: function () {
                 return serieses;
             },
-            leagueAvg: function(leagueId) {
+            leagueAvg: function (leagueId) {
                 var leagueAvg = 0;
                 games = angular.fromJson(localStorage['game']);
                 if (typeof games != 'undefined') {
@@ -67,10 +67,10 @@ angular.module('bowlawesome.services', [])
                 }
                 return leagueAvg;
             },
-            seriesAvg: function() {
+            seriesAvg: function () {
                 return null;
             },
-            updateLeagueAvg: function(leagueId) {
+            updateLeagueAvg: function (leagueId) {
                 var leagueAvg = 0;
                 var gameCount = 0;
                 games = angular.fromJson(localStorage['game']);
@@ -94,7 +94,7 @@ angular.module('bowlawesome.services', [])
                 }
 
             },
-            updateSeriesAvg: function(seriesId) {
+            updateSeriesAvg: function (seriesId) {
                 var seriesAvg = 0;
                 var gameCount = 0;
                 games = angular.fromJson(localStorage['game']);
@@ -121,17 +121,67 @@ angular.module('bowlawesome.services', [])
             }
         };
     })
-    .factory('GameNumberService', function() {
+    .factory('GameNumberService', function () {
         var gameNumber = [
-    { id: 1, title:1  },
-    { id: 2, title: 2},
-    { id: 3, title:  3},
-    { id: 4, title: 4}
+    { id: 1, title: 1 },
+    { id: 2, title: 2 },
+    { id: 3, title: 3 },
+    { id: 4, title: 4 }
         ];
         return {
-            records: function() {
+            records: function () {
                 return gameNumber;
 
             }
         };
     })
+    // phonegap ready service - listens to deviceready
+    .factory('phonegapReady', function() {
+        return function (fn) {
+            var queue = [];
+            var impl = function () {
+                queue.push(Array.prototype.slice.call(arguments));
+            };
+              
+            document.addEventListener('deviceready', function () {
+                queue.forEach(function (args) {
+                    fn.apply(this, args);
+                });
+                impl = fn;
+            }, false);
+              
+            return function () {
+                return impl.apply(this, arguments);
+            };
+        };
+    })
+    .factory('contacts', function ($rootScope, phonegapReady) {
+        return {
+            findContacts: phonegapReady(function(onSuccess, onError) {
+                var options = new ContactFindOptions();
+                options.filter = "";
+                options.multiple = true;
+                var fields = ["displayName", "name"];
+                navigator.contacts.find(fields, function(r) {
+                    console.log("Success" + r.length);
+                    var that = this,
+                        args = arguments;
+                    if (onSuccess) {
+                        $rootScope.$apply(function() {
+                            onSuccess.apply(that, args);
+                        });
+                    }
+                }, function() {
+                    var that = this,
+                        args = arguments;
+
+                    if (onError) {
+                        $rootScope.$apply(function() {
+                            onError.apply(that, args);
+                        });
+                    }
+                }, options);
+            })
+        };
+    });
+
