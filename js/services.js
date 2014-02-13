@@ -183,8 +183,7 @@ angular.module('bowlawesome.services', [])
                 }, options);
             })
         };
-    })
-   
+    }) 
     .factory('cordovaReady', function() {
         return function (fn) {
 
