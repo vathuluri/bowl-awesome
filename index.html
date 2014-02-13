@@ -19,8 +19,14 @@
     <script src="js/angular/angular-sanitize.js"></script>
     <script src="js/ionic-angular.js"></script>
 
-    <script src="js/cordova-2.7.0.js"></script>
-    <!--<script src="js/index.js"></script>-->
+    <script src="js/cordova.js"></script>
+    <!--    <script src="js/index.js"></script>-->
+
+    <script type="text/javascript">
+        document.addEventListener("deviceready", function () {
+            alert('Our first PhoneGap app');
+        }, false);
+    </script>
 
     <!-- your app's script -->
     <script src="js/xdate.js"></script>
