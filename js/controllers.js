@@ -1,6 +1,15 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService) {
-
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, geolocation) {
+        geolocation.getCurrentPosition(function (position) {
+            alert('Latitude: ' + position.coords.latitude + '\n' +
+                  'Longitude: ' + position.coords.longitude + '\n' +
+                  'Altitude: ' + position.coords.altitude + '\n' +
+                  'Accuracy: ' + position.coords.accuracy + '\n' +
+                  'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
+                  'Heading: ' + position.coords.heading + '\n' +
+                  'Speed: ' + position.coords.speed + '\n' +
+                  'Timestamp: ' + position.timestamp + '\n');
+        });
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -534,7 +543,7 @@ angular.module('bowlawesome.controllers', [])
             }];
 
     })
-    .controller('leftNavCtrl', function ($scope, $location) {
+    .controller('leftNavCtrl', function ($scope, $location, contactsService) {
         $scope.items = [{
             id: 1,
             title: 'Leagues'
@@ -549,6 +558,10 @@ angular.module('bowlawesome.controllers', [])
             }
             else {
                 $location.path("/friends");
+                ionic.Platform.ready(function () {
+                    var device = ionic.Platform.device();
+                    console.log("Hey, I'm an", device.platform);
+                });
                 $scope.find = function() {
                     $scope.contacts = [];
                     var options = new ContactFindOptions();
