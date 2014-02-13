@@ -1,6 +1,7 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, geolocation) {
         geolocation.getCurrentPosition(function (position) {
+            alert("Hello");
             alert('Latitude: ' + position.coords.latitude + '\n' +
                   'Longitude: ' + position.coords.longitude + '\n' +
                   'Altitude: ' + position.coords.altitude + '\n' +
@@ -551,29 +552,13 @@ angular.module('bowlawesome.controllers', [])
             id: 2,
             title: 'Friends'
         }];
-        $scope.selectNavItem = function(item, $index) {
+        $scope.selectNavItem = function (item, $index) {
             if ($index == 0) {
                 $location.path("/");
                 $scope.sideMenuController.close();
             }
             else {
                 $location.path("/friends");
-                ionic.Platform.ready(function () {
-                    var device = ionic.Platform.device();
-                    console.log("Hey, I'm an", device.platform);
-                });
-                $scope.find = function() {
-                    $scope.contacts = [];
-                    var options = new ContactFindOptions();
-                    //options.filter=""; //returns all results
-                    options.filter = $scope.searchTxt;
-                    options.multiple = true;
-                    var fields = ["displayName", "name", "phoneNumbers"];
-                    navigator.contacts.find(fields, function(contacts) {
-                        $scope.contacts = contacts;
-                        $scope.$apply();
-                    }, function(e) { console.log("Error finding contacts " + e.code); }, options);
-                };
                 $scope.sideMenuController.close();
             }
         };

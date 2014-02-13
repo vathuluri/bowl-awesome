@@ -209,6 +209,7 @@ angular.module('bowlawesome.services', [])
     .factory('geolocation', function ($rootScope, cordovaReady) {
         return {
             getCurrentPosition: cordovaReady(function (onSuccess, onError, options) {
+                alert("in geo location");
                 navigator.geolocation.getCurrentPosition(function () {
                     var that = this,
                       args = arguments;
