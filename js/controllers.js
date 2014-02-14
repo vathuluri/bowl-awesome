@@ -512,7 +512,7 @@ angular.module('bowlawesome.controllers', [])
                 }
             }];
     })
-    .controller('FriendsCtrl', function ($scope, $location, constants, $http,contactsService) {
+    .controller('FriendsCtrl', function ($scope, $location, constants, $http) {
         $scope.title = "Friends";
         $scope.leftButtons = [
               {
@@ -546,7 +546,7 @@ angular.module('bowlawesome.controllers', [])
         };
 
     })
-    .controller('leftNavCtrl', function ($scope, $location, contactsService) {
+    .controller('leftNavCtrl', function ($scope, $location) {
         $scope.items = [{
             id: 1,
             title: 'Leagues'
