@@ -5,33 +5,14 @@
     A simple bowling record tracker.
   </description>
   <author email="dev@callback.apache.org" href="http://cordova.io">
-
   </author>
   <content src="index.html" />
   <access origin="*" />
   <preference name="fullscreen" value="false" />
   <preference name="webviewbounce" value="true" />
+  <preference name="phonegap-version" value="3.1.0" />
   <icon src="icon.png" />
-  <!--<icon src="https://s3.amazonaws.com/build.phonegap.com/85e821c6-6276-11e3-a3ff-22000a98b3d6/icon.png" gap:platform="android" gap:density="ldpi" />-->
-  <!--<icon src="res/icon/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-  <icon src="res/icon/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-  <icon src="res/icon/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />-->
-  <plugin name="com.phonegap.plugins.facebookconnect">
-    <param name="APP_ID" value="386895214788542" />
-    <param name="APP_NAME" value="Bowl­A­w­e­some" />
-  </plugin>
-  <feature name="Device">
-    <param name="android-package" value="org.apache.cordova.device.Device" />
-  </feature>
-  <feature name="Notification">
-    <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
-  </feature>
-  <feature name="Vibration">
-    <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
-  </feature>
-  <feature name="Contacts">
-    <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
-</feature>
   <!-- We'll include the Barcode plugin as an example -->
+  <gap:plugin name="org.apache.cordova.device" />
   <gap:plugin name="org.apache.cordova.contacts.ContactManager" />
 </widget>
