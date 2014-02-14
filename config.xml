@@ -28,6 +28,6 @@
   </gap:url-scheme>
 
   <gap:plugin name="org.apache.cordova.device" />
-  <gap:plugin name="org.apache.cordova.contacts.ContactManager" />
+  <gap:plugin name="org.apache.cordova.contacts" />
 
 </widget>
