@@ -16,34 +16,22 @@
         // device APIs are available
         //
         function onDeviceReady() {
-            // find all contacts
-            
+            // specify contact search criteria
             var options = new ContactFindOptions();
-            options.filter = "";
-            var filter = ["displayName", "addresses"];
-            if (!navigator.contacts) {
-                alert("Navigator is not supported");
-                return;
-            }
+            options.filter = "";      // empty search string returns all contacts
+            options.multiple = true;  // return multiple results
+            filter = ["displayName"]; // return contact.displayName field
+
+            // find contacts
             navigator.contacts.find(filter, onSuccess, onError, options);
         }
 
         // onSuccess: Get a snapshot of the current contacts
         //
         function onSuccess(contacts) {
-            alert("im sucess");
-            // display the address information for all contacts
+            alert("Im Success");
             for (var i = 0; i < contacts.length; i++) {
-                for (var j = 0; j < contacts[i].addresses.length; j++) {
-                    alert("Pref: " + contacts[i].addresses[j].pref + "\n" +
-                          "Type: " + contacts[i].addresses[j].type + "\n" +
-                          "Formatted: " + contacts[i].addresses[j].formatted + "\n" +
-                          "Street Address: " + contacts[i].addresses[j].streetAddress + "\n" +
-                          "Locality: " + contacts[i].addresses[j].locality + "\n" +
-                          "Region: " + contacts[i].addresses[j].region + "\n" +
-                          "Postal Code: " + contacts[i].addresses[j].postalCode + "\n" +
-                          "Country: " + contacts[i].addresses[j].country);
-                }
+                alert(contacts[i].displayName);
             }
         };
 
