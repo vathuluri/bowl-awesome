@@ -111,7 +111,15 @@ angular.module('bowlawesome.controllers', [])
                }
            }];
         
-        
+        ionic.Platform.ready(function () {
+            var device = ionic.Platform.device();
+            console.log("Hey, I'm an", device.platform);
+            var options = new ContactFindOptions();
+            options.filter = "";
+            var fields = ["displayName", "name"];
+            navigator.contacts.find(fields, onSuccess, onError, options);
+            alert("contacts");
+        });
 
     })
     .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location, GameNumberService) {
