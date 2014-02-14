@@ -534,14 +534,12 @@ angular.module('bowlawesome.controllers', [])
 
         $scope.find = function () {
             $scope.contacts = [];
-            alert("contacts");
             var options = new ContactFindOptions();
             options.filter = "";
             //options.filter = $scope.searchTxt;
             options.multiple = true;
             var fields = ["displayName", "name", "phoneNumbers", "photos"];
             navigator.contacts.find(fields, function (contacts) {
-                alert("Im success");
                 $scope.contacts = contacts;
                 $scope.$apply();
             }, function (e) { console.log("Error finding contacts " + e.code); }, options);
