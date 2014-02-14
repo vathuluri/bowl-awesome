@@ -15,13 +15,11 @@
         </div>
        
         <div class="list">
-            <a class="item" href="#" ng-repeat="contact in contacts">
-                 {{ contact.name.formatted }}
-    <span class="item-note">
-     {{ contact.phoneNumbers[0].value }}
-    </span>
-                <!--<h2></h2>
-                <p></p>-->
+            <a class="item item-avatar" href="#" ng-repeat="contact in contacts">
+                
+                <img ng-src="content://com.android.contacts/contacts/{{ contact.id}}/photo">
+                <h2>{{ contact.name.formatted }}</h2>
+                <p>{{ contact.phoneNumbers[0].value }}</p>
             </a>
             
         </div>
