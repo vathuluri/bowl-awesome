@@ -17,16 +17,21 @@
         //
         function onDeviceReady() {
             // find all contacts
-            alert("im ready");
+            
             var options = new ContactFindOptions();
             options.filter = "";
             var filter = ["displayName", "addresses"];
+            if (!navigator.contacts) {
+                alert("Navigator is not supported");
+                return;
+            }
             navigator.contacts.find(filter, onSuccess, onError, options);
         }
 
         // onSuccess: Get a snapshot of the current contacts
         //
         function onSuccess(contacts) {
+            alert("im sucess");
             // display the address information for all contacts
             for (var i = 0; i < contacts.length; i++) {
                 for (var j = 0; j < contacts[i].addresses.length; j++) {
