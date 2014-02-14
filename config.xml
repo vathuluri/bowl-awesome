@@ -6,5 +6,8 @@
   </description>
   <author email="dev@callback.apache.org" href="http://cordova.io">
   </author>
- 
+
+  <!-- We'll include the Barcode plugin as an example -->
+  <gap:plugin name="org.apache.cordova.device" />
+  <gap:plugin name="org.apache.cordova.contacts.ContactManager" />
 </widget>
