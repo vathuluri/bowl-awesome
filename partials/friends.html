@@ -14,9 +14,10 @@
 
         </div>
        
-        <div class="list" ng-repeat="contact in contacts" >
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
+        <div class="list">
+            <a class="item item-avatar" href="#" ng-repeat="contact in contacts">
+                
+                <img ng-src="{{ contact.photos[0] }}">
                 <h2>{{ contact.name.formatted }}</h2>
                 <p>{{ contact.phoneNumbers[0].value }}</p>
             </a>
