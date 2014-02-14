@@ -1,16 +1,5 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, AvgScoreService, geolocation) {
-        geolocation.getCurrentPosition(function (position) {
-            alert("Hello");
-            alert('Latitude: ' + position.coords.latitude + '\n' +
-                  'Longitude: ' + position.coords.longitude + '\n' +
-                  'Altitude: ' + position.coords.altitude + '\n' +
-                  'Accuracy: ' + position.coords.accuracy + '\n' +
-                  'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-                  'Heading: ' + position.coords.heading + '\n' +
-                  'Speed: ' + position.coords.speed + '\n' +
-                  'Timestamp: ' + position.timestamp + '\n');
-        });
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location) {
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -121,6 +110,11 @@ angular.module('bowlawesome.controllers', [])
                    $scope.sideMenuController.toggleLeft();
                }
            }];
+        
+        ionic.Platform.ready(function () {
+            var device = ionic.Platform.device();
+            alert("Hey, I'm an", device.platform);
+        });
 
     })
     .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location, GameNumberService) {

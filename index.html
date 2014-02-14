@@ -23,9 +23,10 @@
     <script src="js/ionic-angular.js"></script>
 
     <script type="text/javascript">
-        document.addEventListener("deviceready", function () {
-            alert('Our first PhoneGap app');
-        }, false);
+        ionic.Platform.ready(function () {
+            var device = ionic.Platform.device();
+            console.log("Hey, I'm an", device.platform);
+        });
     </script>
 
     <!-- your app's script -->
@@ -78,23 +79,6 @@
                     {{item.title}}
                 </item>              
             </list>
-            <form ng-submit="find()">
-                <div class="left" style="float:left">
-                    <input ng-model="searchTxt" type="text" value="" placeholder="search" class="topcoat-search-input">
-                </div>
-            </form>
-    
-            <div ng-show="contacts.length>0">
-                <p class="centerize">Number of contacts found: {{contacts.length}}</p>
-                <div class="topcoat-list__container list">
-                    <ul class=topcoat-list>
-                        <li ng-repeat="contact in contacts" class="topcoat-list__item">
-                            <p>{{ contact.name.formatted }}
-                            <a href="tel://{{contact.phoneNumbers[0].value}}" style="float:right">{{ contact.phoneNumbers[0].value }}</a></p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </content>
       </side-menu>
     </side-menus>

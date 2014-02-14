@@ -20,6 +20,9 @@
     <param name="APP_ID" value="386895214788542" />
     <param name="APP_NAME" value="Bowl­A­w­e­some" />
   </plugin>
+  <feature name="Device">
+    <param name="android-package" value="org.apache.cordova.device.Device" />
+  </feature>
   <feature name="Notification">
     <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
   </feature>
