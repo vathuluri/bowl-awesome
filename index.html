@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link href="css/ionic.css" rel="stylesheet">
-
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
     <!-- ionic/angularjs scripts -->
     <script src="js/ionic.js"></script>
     <script src="js/angular/angular.js"></script>
@@ -20,15 +20,7 @@
     <script src="js/ionic-angular.js"></script>
 
     <script type="text/javascript">
-        ionic.Platform.ready(function () {
-            var device = ionic.Platform.device();
-            console.log("Hey, I'm an", device.platform);
-            var options = new ContactFindOptions();
-            options.filter = "";
-            var fields = ["displayName", "name"];
-            navigator.contacts.find(fields, onSuccess, onError, options);
-            alert("contacts");
-        });
+       
     </script>
 
     <!-- your app's script -->

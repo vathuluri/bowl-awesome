@@ -32,4 +32,6 @@
   <feature name="Contacts">
     <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
 </feature>
+  <!-- We'll include the Barcode plugin as an example -->
+  <gap:plugin name="org.apache.cordova.contacts.ContactManager" />
 </widget>
