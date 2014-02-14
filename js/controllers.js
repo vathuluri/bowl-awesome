@@ -111,10 +111,7 @@ angular.module('bowlawesome.controllers', [])
                }
            }];
         
-        ionic.Platform.ready(function () {
-            var device = ionic.Platform.device();
-            alert("Hey, I'm an", device.platform);
-        });
+        
 
     })
     .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location, GameNumberService) {
