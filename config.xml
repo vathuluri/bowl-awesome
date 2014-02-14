@@ -6,13 +6,5 @@
   </description>
   <author email="dev@callback.apache.org" href="http://cordova.io">
   </author>
-  <content src="index.html" />
-  <access origin="*" />
-  <preference name="fullscreen" value="false" />
-  <preference name="webviewbounce" value="true" />
-  <preference name="phonegap-version" value="3.1.0" />
-  <icon src="icon.png" />
-  <!-- We'll include the Barcode plugin as an example -->
-  <gap:plugin name="org.apache.cordova.device" />
-  <gap:plugin name="org.apache.cordova.contacts.ContactManager" />
+ 
 </widget>
