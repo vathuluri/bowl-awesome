@@ -109,7 +109,7 @@ angular.module('bowlawesome.controllers', [])
                tap: function (e) {
                    $scope.sideMenuController.toggleLeft();
                }
-           }];     
+           }];
 
     })
     .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location, GameNumberService) {
@@ -532,14 +532,14 @@ angular.module('bowlawesome.controllers', [])
                 }
             }];
 
-        $scope.find = function() {
+        $scope.find = function () {
             $scope.contacts = [];
             var options = new ContactFindOptions();
             options.filter = "";
             //options.filter = $scope.searchTxt;
             options.multiple = true;
             var fields = ["displayName", "name", "phoneNumbers"];
-            navigator.contacts.find(fields, function(contacts) {
+            navigator.contacts.find(fields, function (contacts) {
                 $scope.contacts = contacts;
                 $scope.$apply();
             }, function (e) { console.log("Error finding contacts " + e.code); }, options);

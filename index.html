@@ -6,42 +6,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link href="css/ionic.css" rel="stylesheet">
-     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
 
-        // Wait for device API libraries to load
-        //
-        document.addEventListener("deviceready", onDeviceReady, false);
-
-        // device APIs are available
-        //
-        function onDeviceReady() {
-            // specify contact search criteria
-            var options = new ContactFindOptions();
-            options.filter = "";      // empty search string returns all contacts
-            options.multiple = true;  // return multiple results
-            filter = ["displayName"]; // return contact.displayName field
-
-            // find contacts
-            navigator.contacts.find(filter, onSuccess, onError, options);
-        }
-
-        // onSuccess: Get a snapshot of the current contacts
-        //
-        function onSuccess(contacts) {
-            //alert("Im Success");
-            for (var i = 0; i < contacts.length; i++) {
-                //alert(contacts[i].displayName);
-            }
-        };
-
-        // onError: Failed to get the contacts
-        //
-        function onError(contactError) {
-            alert('onError!');
-        }
-
-    </script>
     <!-- ionic/angularjs scripts -->
     <script src="js/ionic.js"></script>
     <script src="js/angular/angular.js"></script>
@@ -72,22 +39,14 @@
             type="text/javascript">
     </script>-->
 
-    <!--<script type="text/javascript">
+    <script type="text/javascript">
         app.initialize();
-    </script>-->
+    </script>
 
 </head>
 
 <body ng-app="bowlawesome" nav-router animation="slide-left-right-ios7">
-    <!-- The nav bar that will be updated as we navigate -->
-    <!-- <nav-bar
-             class="nav-title-slide-ios7"
-             type="bar-positive"
-             back-button-type="button-icon"
-             back-button-icon="ion-arrow-left-c"></nav-bar>-->
-
-
-
+   
     <side-menus>
         <!-- Center content -->
         <pane side-menu-content>
