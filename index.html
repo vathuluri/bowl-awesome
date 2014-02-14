@@ -6,7 +6,49 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link href="css/ionic.css" rel="stylesheet">
-    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
+     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        // Wait for device API libraries to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // device APIs are available
+        //
+        function onDeviceReady() {
+            // find all contacts
+            alert("im ready");
+            var options = new ContactFindOptions();
+            options.filter = "";
+            var filter = ["displayName", "addresses"];
+            navigator.contacts.find(filter, onSuccess, onError, options);
+        }
+
+        // onSuccess: Get a snapshot of the current contacts
+        //
+        function onSuccess(contacts) {
+            // display the address information for all contacts
+            for (var i = 0; i < contacts.length; i++) {
+                for (var j = 0; j < contacts[i].addresses.length; j++) {
+                    alert("Pref: " + contacts[i].addresses[j].pref + "\n" +
+                          "Type: " + contacts[i].addresses[j].type + "\n" +
+                          "Formatted: " + contacts[i].addresses[j].formatted + "\n" +
+                          "Street Address: " + contacts[i].addresses[j].streetAddress + "\n" +
+                          "Locality: " + contacts[i].addresses[j].locality + "\n" +
+                          "Region: " + contacts[i].addresses[j].region + "\n" +
+                          "Postal Code: " + contacts[i].addresses[j].postalCode + "\n" +
+                          "Country: " + contacts[i].addresses[j].country);
+                }
+            }
+        };
+
+        // onError: Failed to get the contacts
+        //
+        function onError(contactError) {
+            alert('onError!');
+        }
+
+    </script>
     <!-- ionic/angularjs scripts -->
     <script src="js/ionic.js"></script>
     <script src="js/angular/angular.js"></script>
