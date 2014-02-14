@@ -1,49 +1,26 @@
 ﻿<nav-view animation="slide-left-right">
     <header-bar title="title" left-buttons="leftButtons" right-buttons="rightButtons" type="bar-positive" align-title="center"></header-bar>
     <content has-header="true">
-        <h1>Example</h1>
-    <p>Find Contacts</p>
-        <div class="list">
+        
+        <div class="list" ng-repeat="contact in contacts" >
             <a class="item item-avatar" href="#">
                 <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
+                <h2>{{ contact.name.formatted }}</h2>
+                <p>{{ contact.phoneNumbers[0].value }}</p>
             </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
-            <a class="item item-avatar" href="#">
-                <img src="http://ionicframework.com/img/docs/venkman.jpg">
-                <h2>Pretty Hate Machine</h2>
-                <p>Nine Inch Nails</p>
-            </a>
+            
         </div>
+        
+        <!-- <div ng-show="contacts.length>0">
+        <p class="centerize">Number of contacts found: {{contacts.length}}</p>
+        <div class="topcoat-list__container list">
+            <ul class=topcoat-list>
+                <li ng-repeat="contact in contacts" class="topcoat-list__item">
+                    <p>{{ contact.name.formatted }}
+                    <a href="tel://{{contact.phoneNumbers[0].value}}" style="float:right">{{ contact.phoneNumbers[0].value }}</a></p>
+                </li>
+            </ul>
+        </div>
+    </div>-->
     </content>
         </nav-view>

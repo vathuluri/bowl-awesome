@@ -155,7 +155,7 @@ angular.module('bowlawesome.services', [])
             };
         };
     })
-    .factory('contactsService', function ($rootScope, phonegapReady) {
+    .factory('contacts', function ($rootScope, phonegapReady) {
         return {
             findContacts: phonegapReady(function(onSuccess, onError) {
                 var options = new ContactFindOptions();

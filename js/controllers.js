@@ -512,7 +512,7 @@ angular.module('bowlawesome.controllers', [])
                 }
             }];
     })
-    .controller('FriendsCtrl', function ($scope, $location, constants, $http) {
+    .controller('FriendsCtrl', function ($scope, $location, constants, $http,contactsService) {
         $scope.title = "Friends";
         $scope.leftButtons = [
               {
@@ -531,6 +531,19 @@ angular.module('bowlawesome.controllers', [])
                     $scope.modal.show();
                 }
             }];
+
+        $scope.find = function() {
+            $scope.contacts = [];
+            var options = new ContactFindOptions();
+            options.filter = "";
+            //options.filter = $scope.searchTxt;
+            options.multiple = true;
+            var fields = ["displayName", "name", "phoneNumbers"];
+            navigator.contacts.find(fields, function(contacts) {
+                $scope.contacts = contacts;
+                $scope.$apply();
+            }, function (e) { console.log("Error finding contacts " + e.code); }, options);
+        };
 
     })
     .controller('leftNavCtrl', function ($scope, $location, contactsService) {
