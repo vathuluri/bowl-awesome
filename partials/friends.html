@@ -15,25 +15,15 @@
         </div>
        
         <div class="list">
-            <a class="item item-avatar" href="#" ng-repeat="contact in contacts">
-                
-                <img ng-src="content://com.android.contacts/contacts/{{ contact.id}}/photo">
+            <a class="item item-avatar item-icon-right" ng-repeat="contact in contacts">
+                <img ng-src="contact.photos[0].value" >
                 <h2>{{ contact.name.formatted }}</h2>
-                <p>{{ contact.phoneNumbers[0].value }}</p>
+                <p>{{ contact.emails[0].value }}</p>
+                {{contact.photos[0].value}}
+                <span ng-click='doActions($index, seriesObj )'><i class="icon ion-ios7-more-outline"></i></span>
             </a>
             
         </div>
-        
-        <!-- <div ng-show="contacts.length>0">
-                 <p class="centerize">Number of contacts found: {{contacts.length}}</p>
-                 <div class="topcoat-list__container list">
-                     <ul class=topcoat-list>
-                         <li ng-repeat="contact in contacts" class="topcoat-list__item">
-                             <p>{{ contact.name.formatted }}
-                                 <a href="tel://{{contact.phoneNumbers[0].value}}" style="float:right">{{ contact.phoneNumbers[0].value }}</a></p>
-                         </li>
-                     </ul>
-                 </div>
-             </div>-->
+       
     </content>
         </nav-view>

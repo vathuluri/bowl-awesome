@@ -538,7 +538,7 @@ angular.module('bowlawesome.controllers', [])
             options.filter = "";
             //options.filter = $scope.searchTxt;
             options.multiple = true;
-            var fields = ["displayName", "name", "phoneNumbers", "photos"];
+            var fields = ["displayName", "emails", "photos"];
             navigator.contacts.find(fields, function (contacts) {
                 $scope.contacts = contacts;
                 $scope.$apply();
