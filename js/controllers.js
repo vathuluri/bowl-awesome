@@ -533,6 +533,26 @@ angular.module('bowlawesome.controllers', [])
             }];
 
         $scope.find = function () {
+            // Show the loading overlay and text
+            $scope.loading = $ionicLoading.show({
+
+                // The text to display in the loading indicator
+                content: 'Loading',
+
+                // The animation to use
+                animation: 'fade-in',
+
+                // Will a dark overlay or backdrop cover the entire view
+                showBackdrop: true,
+
+                // The maximum width of the loading indicator
+                // Text will be wrapped if longer than maxWidth
+                maxWidth: 200,
+
+                // The delay in showing the indicator
+                showDelay: 500
+            });
+
             $scope.contacts = [];
             var options = new ContactFindOptions();
             options.filter = "";
@@ -542,7 +562,11 @@ angular.module('bowlawesome.controllers', [])
             navigator.contacts.find(fields, function (contacts) {
                 $scope.contacts = contacts;
                 $scope.$apply();
-            }, function (e) { console.log("Error finding contacts " + e.code); }, options);
+                $scope.loading.hide();
+            }, function (e) {
+                console.log("Error finding contacts " + e.code);
+                $scope.loading.hide();
+            }, options);
         };
 
     })
