@@ -17,10 +17,11 @@
         <div class="list">
             <a class="item item-avatar item-icon-right" ng-repeat="contact in contacts">
                 <img ng-src="{{contact.photos[0].value}}" >
-                <h2>{{ contact.displayName.formatted }}</h2>
-                <p>{{ contact.emails[0].value }}</p>
-                {{contact.photos[0].value}}
-                <span ng-click='doActions($index, seriesObj )'><i class="icon ion-ios7-more-outline"></i></span>
+                <h2>{{ contact.displayName }}</h2>
+                <p>{{contact.photos[0].value}}</p>
+                {{contact.img}}
+
+                <span ng-click='doActions($index, {{ contact.emails[0].value }} )'><button class="button icon-left button-balanced">Invite</button></span>
             </a>
             
         </div>
