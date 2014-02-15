@@ -16,10 +16,10 @@
        
         <div class="list">
             <a class="item item-avatar item-icon-right" ng-repeat="contact in contacts">
-                <img src="content://com.android.contacts/contacts/1/photo" >
+                <!--<img src="content://com.android.contacts/contacts/{{contact.id}}/photo" >-->
                 <h2>{{ contact.displayName.formatted }}</h2>
                 <p>{{ contact.emails[0].value }}</p>
-                <!--{{contact.photos[0].value}}-->
+                {{contact.photos[0].value}}
                 <span ng-click='doActions($index, seriesObj )'><i class="icon ion-ios7-more-outline"></i></span>
             </a>
             

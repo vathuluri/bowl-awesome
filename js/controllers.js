@@ -512,7 +512,7 @@ angular.module('bowlawesome.controllers', [])
                 }
             }];
     })
-    .controller('FriendsCtrl', function ($scope, $location, constants, $http) {
+    .controller('FriendsCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
         $scope.title = "Friends";
         $scope.leftButtons = [
               {
