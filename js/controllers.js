@@ -569,7 +569,7 @@ angular.module('bowlawesome.controllers', [])
             }, options);
         };
 
-        $scope.doActions = function($index, emailInvite) {
+        $scope.doActions = function(index, emailInvite) {
             alert(emailInvite);
         };
 
