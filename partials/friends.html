@@ -16,9 +16,9 @@
        
         <div class="list">
             <div class="item item-button-right" ng-repeat="contact in contacts">
-                {{ contact.displayName }
+                {{ contact.displayName }}
                 <button class="button button-balanced" ng-click='doActions($index, {{ contact.emails[0].value }} )'>
-                    Invite<!--<i class="icon ion-ios7-telephone"></i>-->
+                    <i class="icon ion-ios7-personadd-outline"></i>
                 </button>
             </div>
         </div>

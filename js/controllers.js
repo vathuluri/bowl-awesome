@@ -569,6 +569,10 @@ angular.module('bowlawesome.controllers', [])
             }, options);
         };
 
+        $scope.doActions = function($index, emailInvite) {
+            alert(emailInvite);
+        };
+
     })
     .controller('leftNavCtrl', function ($scope, $location) {
         $scope.items = [{
