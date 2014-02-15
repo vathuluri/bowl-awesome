@@ -569,8 +569,8 @@ angular.module('bowlawesome.controllers', [])
             }, options);
         };
 
-        $scope.doActions = function(index, emailInvite) {
-            alert(emailInvite);
+        $scope.doActions = function(index, contact) {
+            alert(contact.emails[0].value);
         };
 
     })
