@@ -15,15 +15,12 @@
         </div>
        
         <div class="list">
-            <a class="item item-avatar item-icon-right" ng-repeat="contact in contacts">
-                <img ng-src="{{contact.photos[0].value}}" >
-                <h2>{{ contact.displayName }}</h2>
-                <p>{{contact.photos[0].value}}</p>
-                {{contact.img}}
-
-                <span ng-click='doActions($index, {{ contact.emails[0].value }} )'><button class="button icon-left button-balanced">Invite</button></span>
-            </a>
-            
+            <div class="item item-button-right" ng-repeat="contact in contacts">
+                {{ contact.displayName }
+                <button class="button button-balanced" ng-click='doActions($index, {{ contact.emails[0].value }} )'>
+                    Invite<!--<i class="icon ion-ios7-telephone"></i>-->
+                </button>
+            </div>
         </div>
        
     </content>
