@@ -46,29 +46,36 @@
 </head>
 
 <body ng-app="bowlawesome" nav-router animation="slide-left-right-ios7">
-    
-    <side-menus>
-        <!-- Center content -->
-        <pane side-menu-content>
-            <ng-view></ng-view>
-        </pane>
-        <!-- Left menu -->
-        <side-menu side="left" ng-controller="leftNavCtrl">
-            <header class="bar bar-header bar-positive">
-                <h1 class="title">Bowl Awesome</h1>
-                <!--<button class="button button-icon" ng-click="newProject()">
-                        <i class="ion ion-plus"></i>
-                    </button>-->
-            </header>
-            <content has-header="true" scroll="false">
-                <list>
-                    <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
-                        {{item.title}}
-                    </item>              
-                </list>
-            </content>
-        </side-menu>
-    </side-menus>
+    <nav-bar animation="nav-title-slide-ios7"
+        type="bar-positive"
+        back-button-type="button-icon"
+        back-button-icon="ion-arrow-left-c"></nav-bar>
+
+    <!-- where the initial view template will be rendered -->
+    <nav-view animation="slide-left-right">
+  <side-menus>
+      <!-- Center content -->
+      <pane side-menu-content>
+          <ng-view></ng-view>
+      </pane>
+      <!-- Left menu -->
+      <side-menu side="left" ng-controller="leftNavCtrl">
+          <header class="bar bar-header bar-positive">
+              <h1 class="title">Bowl Awesome</h1>
+              <!--<button class="button button-icon" ng-click="newProject()">
+                      <i class="ion ion-plus"></i>
+                  </button>-->
+          </header>
+          <content has-header="true" scroll="false">
+              <list>
+                  <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
+                      {{item.title}}
+                  </item>              
+              </list>
+          </content>
+      </side-menu>
+  </side-menus>
+      </nav-view>
     <!-- where the content of each page will be rendered -->
 
     <script id="modal.html" type="text/ng-template">
