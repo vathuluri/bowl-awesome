@@ -45,35 +45,31 @@
 
 </head>
 
-<body ng-app="bowlawesome" nav-router animation="slide-left-right-ios7">
-   
+<body ng-app="bowlawesome" nav-router animation="slide-left-right-ios7" ng-controller='HomeCtrl'>
+    
     <side-menus>
         <!-- Center content -->
         <pane side-menu-content>
-             <ng-view></ng-view>
+            <ng-view></ng-view>
         </pane>
-
         <!-- Left menu -->
-      <side-menu side="left" ng-controller="leftNavCtrl">
-        <header class="bar bar-header bar-positive">
-          <h1 class="title">Bowl Awesome</h1>
-          <!--<button class="button button-icon" ng-click="newProject()">
-            <i class="ion ion-plus"></i>
-          </button>-->
-        </header>
-        <content has-header="true" scroll="false">
-            <list>
-                <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
-                    {{item.title}}
-                </item>              
-            </list>
-        </content>
-      </side-menu>
+        <side-menu side="left" ng-controller="leftNavCtrl">
+            <header class="bar bar-header bar-positive">
+                <h1 class="title">Bowl Awesome</h1>
+                <!--<button class="button button-icon" ng-click="newProject()">
+                        <i class="ion ion-plus"></i>
+                    </button>-->
+            </header>
+            <content has-header="true" scroll="false">
+                <list>
+                    <item ng-repeat="item in items" ng-click="selectNavItem(item, $index)" >
+                        {{item.title}}
+                    </item>              
+                </list>
+            </content>
+        </side-menu>
     </side-menus>
-
-
     <!-- where the content of each page will be rendered -->
-
 
     <script id="modal.html" type="text/ng-template">
       <div class="modal">
@@ -170,7 +166,5 @@
         </div>
       </div>
     </script>
-
-
 </body>
 </html>

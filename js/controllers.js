@@ -514,6 +514,7 @@ angular.module('bowlawesome.controllers', [])
     })
     .controller('FriendsCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
         $scope.title = "Friends";
+       
         $scope.leftButtons = [
               {
                   type: 'button-clear',
@@ -593,4 +594,12 @@ angular.module('bowlawesome.controllers', [])
                 $scope.sideMenuController.close();
             }
         };
+    })
+
+    .controller('HomeCtrl', function ($scope, constants) {
+        if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
+            $scope.IsUserLoggedIn = constants.userLoggedIn;
+        } else {
+            $scope.IsUserLoggedIn = 'false';
+        }
     })
