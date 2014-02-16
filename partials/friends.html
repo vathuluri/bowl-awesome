@@ -17,7 +17,7 @@
         <div class="list">
             <div class="item item-button-right" ng-repeat="contact in contacts">
                 <span ng-show="contact.displayName != ''">{{ contact.displayName }}</span> 
-                <span class="button button-balanced" ng-click='doActions($index, contact )'>
+                <span class="button button-balanced" ng-click='doActions($index, contact )' ng-show="contact.displayName != ''">
                     <i class="ion-ios7-person-outline"></i>&nbsp;<i class="icon ion-ios7-plus-empty"></i>
                 </span>
             </div>
