@@ -570,6 +570,7 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.doActions = function(index, contact) {
+            alert(contact.displayName);
             alert(contact.emails[0].value);
         };
 
