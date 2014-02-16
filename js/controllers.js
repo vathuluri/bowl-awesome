@@ -575,6 +575,12 @@ angular.module('bowlawesome.controllers', [])
             //alert(contact.emails[0].value);
         };
 
+        if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
+            $scope.IsUserLoggedIn = constants.userLoggedIn;
+        } else {
+            $scope.IsUserLoggedIn = 'false';
+        }
+        
     })
     .controller('leftNavCtrl', function ($scope, $location) {
         $scope.items = [{

@@ -1,6 +1,6 @@
 ﻿<nav-view animation="slide-left-right">
     <header-bar title="title" left-buttons="leftButtons" right-buttons="rightButtons" type="bar-positive" align-title="center"></header-bar>
-   <!-- <div ng-if="IsUserLoggedIn == 'true'">-->
+    <div ng-if="IsUserLoggedIn == 'true'">
     <content has-header="true" scroll="true" >
         <div class="list">
             <div class="item item-input-inset">
@@ -13,18 +13,20 @@
             </div>
         </div>
         <div class="list">
-            <div class="item item-button-right" ng-repeat="contact in contacts">
-                <span ng-show="contact.displayName != null">{{ contact.displayName }}</span> 
-                <span class="button button-balanced" ng-click='doActions($index, contact )' ng-show="contact.displayName != null">
-                    <i class="ion-ios7-person-outline"></i><!--&nbsp;<i class="icon ion-ios7-plus-empty"></i>-->
-                </span>
-            </div>
+            <div ng-repeat="contact in contacts">
+                <div class="item item-button-right" ng-show="contact.displayName != null">
+                    <span >{{ contact.displayName }}</span> 
+                    <span class="button button-balanced" ng-click='doActions($index, contact )'>
+                        <i class="ion-ios7-person-outline"></i><!--&nbsp;<i class="icon ion-ios7-plus-empty"></i>-->
+                    </span>
+                </div>
+                </div>
         </div>
     </content>
-       <!-- </div>-->
-    <!--<div ng-if="IsUserLoggedIn == 'false'" >
+        </div>
+    <div ng-if="IsUserLoggedIn == 'false'" >
         <content padding="true" has-header="true">
   <a href="/login" class="button button-balanced">login</a>
 </content>
-    </div>-->
+    </div>
 </nav-view>
