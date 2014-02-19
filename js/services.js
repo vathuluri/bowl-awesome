@@ -24,7 +24,6 @@ angular.module('bowlawesome.services', [])
             },
             edit: function (league) {
                 leagues = angular.fromJson(localStorage['leagues']);
-                var leagueByLeagueId = {};
                 if (typeof leagues != 'undefined') {
                     for (var i = 0, l = leagues.length; i < l; i++) {
                         if (leagues[i].id == league.id) {
@@ -57,8 +56,29 @@ angular.module('bowlawesome.services', [])
                 }
                 return seriesesByLeague;
             },
-            edit: function () {
-
+            getBySeries: function(seriesId) {
+                serieses = angular.fromJson(localStorage['series']);
+                var seriesesBySeries = {};
+                if (typeof serieses != 'undefined') {
+                    for (var i = 0, l = serieses.length; i < l; i++) {
+                        if (serieses[i].id == seriesId) {
+                            seriesesBySeries = serieses[i];
+                        }
+                    }
+                }
+                return seriesesBySeries;
+            },
+            edit: function (series) {
+                serieses = angular.fromJson(localStorage['series']);
+                if (typeof serieses != 'undefined') {
+                    for (var i = 0, l = serieses.length; i < l; i++) {
+                        if (serieses[i].id == series.id) {
+                            serieses[i].name = series.name;
+                        }
+                    }
+                }
+                window.localStorage['series'] = angular.toJson(serieses);
+                return serieses;
             },
         };
     })

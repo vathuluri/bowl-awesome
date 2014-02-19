@@ -42,29 +42,6 @@ angular.module('bowlawesome.controllers', [])
             $scope.modal.hide();
         };
 
-        $scope.editLeague = function (record) {
-            $ionicModal.fromTemplateUrl('editLeague.html', function (modal) {
-                $scope.modal = modal;
-
-            }, {
-                scope: $scope,
-                show: true,
-                animation: 'slide-in-up'
-            });
-            //$scope.modal.show('editLeague.html');
-            //if (typeof localStorage["leagues"] != 'undefined') {
-            //    leagues = angular.fromJson(window.localStorage['leagues']);
-            //    leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
-            //} else {
-            //    leagues = new Array();
-            //    leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
-            //}
-            //window.localStorage['leagues'] = angular.toJson(leagues);
-            //record.leagueName = "";
-            //$scope.leagues = angular.fromJson(window.localStorage['leagues']);
-            //$scope.modal.hide();
-        };
-
         $scope.doRedirect = function (league) {
             var id = league.id;
             $location.path('/seriesDetails/' + id);
@@ -117,8 +94,6 @@ angular.module('bowlawesome.controllers', [])
                    $scope.sideMenuController.toggleLeft();
                }
            }];
-
-        //$scope.
 
     })
     .controller('EditLeagueCtrl', function ($scope, LeaguesService, $location, $routeParams) {
@@ -200,6 +175,13 @@ angular.module('bowlawesome.controllers', [])
             }];
 
     })
+    .controller('EditSeriesCtrl', function ($scope, $ionicActionSheet, $routeParams, SeriesService, $ionicModal, $location) {
+        $scope.series = SeriesService.getBySeries($routeParams.id);
+        $scope.editSeries = function (series) {
+            SeriesService.edit(series);
+            $location.path("/seriesDetails/" + series.leagueId);
+        };
+    })
     .controller('SeriesDetailsCtrl', function ($scope, $ionicActionSheet, $routeParams, SeriesService, $ionicModal, $location) {
         $scope.serieses = SeriesService.get($routeParams.id);
         $scope.leagueId = $routeParams.id;
@@ -231,7 +213,7 @@ angular.module('bowlawesome.controllers', [])
             var series;
             if (typeof localStorage['series'] != 'undefined') {
                 series = angular.fromJson(window.localStorage['series']);
-                ;
+
                 series.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.seriesName, avgScore: 0, leagueId: $scope.leagueId });
             } else {
                 series = new Array();
@@ -270,27 +252,35 @@ angular.module('bowlawesome.controllers', [])
 
             // Show the action sheet
             $ionicActionSheet.show({
-                //   buttons: [
-                //{ text: 'Edit' },
-                //   ],
+                buttons: [
+             { text: 'Edit' }
+                ],
                 destructiveText: 'Delete',
                 cancelText: 'Cancel',
                 cancel: function () {
                 },
                 buttonClicked: function (index) {
                     console.log('BUTTON CLICKED', index);
-                    $scope.editLeague(seriesObj);
+                    $location.path('/editSeries/' + seriesObj.id);
+                    //$scope.editLeague(seriesObj);
                     return true;
                 },
                 destructiveButtonClicked: function () {
-                    //var id = league.id;
                     var r = confirm("Are you sure you want to delete ?");
                     if (r == true) {
                         var series = angular.fromJson(window.localStorage['series']);
-                        if (series.length != null) {
-                            series.splice(seriesIndex, 1);
-                            window.localStorage['series'] = angular.toJson(series);
+                        var removalIndex = -1;
+                        for (var i = 0; i < series.length; i += 1) {
+                            if (series[i].id === seriesObj.id) {
+                                removalIndex = i;
+                                break;
+                            }
                         }
+                        if (removalIndex !== -1) {
+                            console.log("removing the element from the array, index: ", removalIndex);
+                            series.splice(removalIndex, 1);
+                        }
+                        window.localStorage['series'] = angular.toJson(series);
 
                     }
                     else {

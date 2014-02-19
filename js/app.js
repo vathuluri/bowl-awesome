@@ -43,6 +43,7 @@ angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.ser
     $routeProvider.when('/', {templateUrl: 'partials/home.html',controller: 'IndexCtrl'});
     $routeProvider.when('/league/:leagueId/series/:seriesId/gameDetails/', { templateUrl: 'partials/gameDetails.html', controller: 'GameDetailCtrl' });
     $routeProvider.when('/editLeague/:id', { templateUrl: 'partials/editLeagueInfo.html', controller: 'EditLeagueCtrl' });
+    $routeProvider.when('/editSeries/:id', { templateUrl: 'partials/editSeriesInfo.html', controller: 'EditSeriesCtrl' });
     $routeProvider.when('/seriesDetails/:id', { templateUrl: 'partials/seriesDetails.html', controller: 'SeriesDetailsCtrl' });
     $routeProvider.when('/login', { templateUrl: 'partials/login.html', controller: 'LoginCtrl' });
     $routeProvider.when('/friends', { templateUrl: 'partials/friends.html', controller: 'FriendsCtrl' });

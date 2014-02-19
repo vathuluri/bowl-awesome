@@ -1,0 +1,19 @@
+﻿<div class="editSeries">
+    <header class="padding bar bar-header bar-positive">
+        <h1 class="title">Edit Series</h1>
+        <button class="button button-clear" ng-click="closeModal()"><i class="icon ion-ios7-close-outline"></i></button>
+    </header>
+    <content has-header="true">
+          <span>
+           <div class="list">
+            <label class="item item-input">
+                    <span class="input-label">Date</span>
+                    <input type="text" ng-model="series.name" value="series.name">
+                  </label>      
+            </div>
+            <div class="padding">
+              <span ng-click="editSeries(series)" class="button button-full button-positive">Edit Series</span>
+            </div>
+          </span>
+</content>
+</div>
