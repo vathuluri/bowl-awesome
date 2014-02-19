@@ -38,5 +38,9 @@ var app = {
         /*angular.element(document).ready(function() {
             angular.bootstrap(document);
         });*/
+        
+        var gaPlugin;
+        gaPlugin = window.plugins.gaPlugin;
+        gaPlugin.init(successHandler, errorHandler, "UA-48194728-1", 10);
     }
 };

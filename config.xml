@@ -28,5 +28,5 @@
 
   <gap:plugin name="org.apache.cordova.device" />
   <gap:plugin name="org.apache.cordova.contacts" />
-
+  <gap:plugin name="com.adobe.plugins.gaplugin" />
 </widget>
