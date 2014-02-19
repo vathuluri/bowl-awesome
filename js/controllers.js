@@ -1,5 +1,5 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location) {
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -31,7 +31,6 @@ angular.module('bowlawesome.controllers', [])
 
             if (typeof localStorage["leagues"] != 'undefined') {
                 leagues = angular.fromJson(window.localStorage['leagues']);
-                ;
                 leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
             } else {
                 leagues = new Array();
@@ -44,19 +43,26 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.editLeague = function (record) {
-            var leagues;
+            $ionicModal.fromTemplateUrl('editLeague.html', function (modal) {
+                $scope.modal = modal;
 
-            if (typeof localStorage["leagues"] != 'undefined') {
-                leagues = angular.fromJson(window.localStorage['leagues']);
-                leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
-            } else {
-                leagues = new Array();
-                leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
-            }
-            window.localStorage['leagues'] = angular.toJson(leagues);
-            record.leagueName = "";
-            $scope.leagues = angular.fromJson(window.localStorage['leagues']);
-            $scope.modal.hide();
+            }, {
+                scope: $scope,
+                show: true,
+                animation: 'slide-in-up'
+            });
+            //$scope.modal.show('editLeague.html');
+            //if (typeof localStorage["leagues"] != 'undefined') {
+            //    leagues = angular.fromJson(window.localStorage['leagues']);
+            //    leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
+            //} else {
+            //    leagues = new Array();
+            //    leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
+            //}
+            //window.localStorage['leagues'] = angular.toJson(leagues);
+            //record.leagueName = "";
+            //$scope.leagues = angular.fromJson(window.localStorage['leagues']);
+            //$scope.modal.hide();
         };
 
         $scope.doRedirect = function (league) {
@@ -78,6 +84,7 @@ angular.module('bowlawesome.controllers', [])
                 buttonClicked: function (index) {
                     console.log('BUTTON CLICKED', index);
                     //$scope.editmodal.show();
+                    $location.path('/editLeague/' + league.id);
                     //$scope.editLeague(league);
                     return true;
                 },
@@ -111,6 +118,15 @@ angular.module('bowlawesome.controllers', [])
                }
            }];
 
+        //$scope.
+
+    })
+    .controller('EditLeagueCtrl', function ($scope, LeaguesService, $location, $routeParams) {
+        $scope.league = LeaguesService.get($routeParams.id);
+        $scope.editLeague = function (league) {
+            LeaguesService.edit(league);
+            $location.path("/");
+        };
     })
     .controller('GameDetailCtrl', function ($scope, $routeParams, GameService, $ionicModal, AvgScoreService, $location, GameNumberService) {
         $scope.selectables = [
@@ -514,7 +530,7 @@ angular.module('bowlawesome.controllers', [])
     })
     .controller('FriendsCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
         $scope.title = "Friends";
-       
+
         $scope.leftButtons = [
               {
                   type: 'button-clear',
@@ -570,7 +586,7 @@ angular.module('bowlawesome.controllers', [])
             }, options);
         };
 
-        $scope.doActions = function(index, contact) {
+        $scope.doActions = function (index, contact) {
             alert(contact.displayName);
             //alert(contact.emails[0].value);
         };
@@ -580,7 +596,7 @@ angular.module('bowlawesome.controllers', [])
         } else {
             $scope.IsUserLoggedIn = 'false';
         }
-        
+
     })
     .controller('leftNavCtrl', function ($scope, $location) {
         $scope.items = [{
@@ -601,7 +617,6 @@ angular.module('bowlawesome.controllers', [])
             }
         };
     })
-
     .controller('HomeCtrl', function ($scope, constants) {
         if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
             $scope.IsUserLoggedIn = constants.userLoggedIn;

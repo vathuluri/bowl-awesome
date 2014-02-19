@@ -3,6 +3,40 @@ angular.module('bowlawesome.services', [])
 /**
  * A simple example service that returns some data.
  */
+    .factory('LeaguesService', function () {
+        var leagues = angular.fromJson(localStorage['leagues']);
+        return {
+            all: function () {
+                return leagues;
+            },
+            get: function (leagueId) {
+                // Simple index lookup
+                leagues = angular.fromJson(localStorage['leagues']);
+                var leagueByLeagueId = {};
+                if (typeof leagues != 'undefined') {
+                    for (var i = 0, l = leagues.length; i < l; i++) {
+                        if (leagues[i].id == leagueId) {
+                            leagueByLeagueId = leagues[i];
+                        }
+                    }
+                }
+                return leagueByLeagueId;
+            },
+            edit: function (league) {
+                leagues = angular.fromJson(localStorage['leagues']);
+                var leagueByLeagueId = {};
+                if (typeof leagues != 'undefined') {
+                    for (var i = 0, l = leagues.length; i < l; i++) {
+                        if (leagues[i].id == league.id) {
+                            leagues[i].name = league.name;
+                        }
+                    }
+                }
+                window.localStorage['leagues'] = angular.toJson(leagues);
+                return leagues;
+            }
+        };
+    })
     .factory('SeriesService', function () {
         var serieses = angular.fromJson(localStorage['series']);
 
@@ -22,7 +56,10 @@ angular.module('bowlawesome.services', [])
                     }
                 }
                 return seriesesByLeague;
-            }
+            },
+            edit: function () {
+
+            },
         };
     })
     .factory('GameService', function () {
@@ -136,20 +173,20 @@ angular.module('bowlawesome.services', [])
         };
     })
     // phonegap ready service - listens to deviceready
-    .factory('phonegapReady', function() {
+    .factory('phonegapReady', function () {
         return function (fn) {
             var queue = [];
             var impl = function () {
                 queue.push(Array.prototype.slice.call(arguments));
             };
-              
+
             document.addEventListener('deviceready', function () {
                 queue.forEach(function (args) {
                     fn.apply(this, args);
                 });
                 impl = fn;
             }, false);
-              
+
             return function () {
                 return impl.apply(this, arguments);
             };
@@ -157,34 +194,34 @@ angular.module('bowlawesome.services', [])
     })
     .factory('contacts', function ($rootScope, phonegapReady) {
         return {
-            findContacts: phonegapReady(function(onSuccess, onError) {
+            findContacts: phonegapReady(function (onSuccess, onError) {
                 var options = new ContactFindOptions();
                 options.filter = "";
                 options.multiple = true;
                 var fields = ["displayName", "name"];
-                navigator.contacts.find(fields, function(r) {
+                navigator.contacts.find(fields, function (r) {
                     console.log("Success" + r.length);
                     var that = this,
                         args = arguments;
                     if (onSuccess) {
-                        $rootScope.$apply(function() {
+                        $rootScope.$apply(function () {
                             onSuccess.apply(that, args);
                         });
                     }
-                }, function() {
+                }, function () {
                     var that = this,
                         args = arguments;
 
                     if (onError) {
-                        $rootScope.$apply(function() {
+                        $rootScope.$apply(function () {
                             onError.apply(that, args);
                         });
                     }
                 }, options);
             })
         };
-    }) 
-    .factory('cordovaReady', function() {
+    })
+    .factory('cordovaReady', function () {
         return function (fn) {
 
             var queue = [];

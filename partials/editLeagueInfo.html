@@ -1,0 +1,20 @@
+﻿<div class="editmodal">
+    <header class="padding bar bar-header bar-positive">
+        <h1 class="title">Edit League</h1>
+        <!--<button class="button button-clear" ng-click="closeEditLeague()"><i class="icon ion-ios7-close-outline"></i></button>-->
+    </header>
+    <content has-header="true">
+    <div>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">League Name</span>
+                <input type="text" ng-model="league.name" value="league.name">
+            </label>      
+        </div>
+        <div class="padding">
+            <span ng-click="editLeague(league)" class="button button-full button-positive">Edit League</span>
+        </div>
+    </div>
+        </content>
+
+</div>
