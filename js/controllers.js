@@ -1,5 +1,6 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
+        
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -368,7 +369,7 @@ angular.module('bowlawesome.controllers', [])
         };
     })
     .controller('LoginCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
-        $scope.doLogin = function (user) {
+        $scope.doLogin = function (userObj) {
             // Show the loading overlay and text
             $scope.loading = $ionicLoading.show({
 
@@ -388,38 +389,42 @@ angular.module('bowlawesome.controllers', [])
                 // The delay in showing the indicator
                 showDelay: 500
             });
+            var username = userObj.username;
+            var password = userObj.password;
+            Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
+            var user = new Parse.User();
+            //user.set("email", form.email);
+            user.set("username", userObj.username);
+            user.set("password", userObj.password);
 
-            var username = user.username;
-            var password = user.password;
-            var xsrf = $.param({ UserName: username, Password: password, RememberMe: true });
-            $http({
-                method: 'POST',
-                url: constants.produrl + '/account/jsonlogin',
-                data: xsrf,
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            })
-                .success(function (data, status, headers, config) {
+            user.signUp(null, {
+                success: function (user) {
+                    $scope.currentUser = user;
+                    $scope.$apply(); // Notify AngularJS to sync currentUser
                     $scope.loading.hide();
-                    if (data.status) {
-                        localStorage["user.isLogged"] = 'true';
-                        user.isLogged = true;
-                        user.username = data.username;
-                        localStorage["authToken"] = data.token;
-                        $location.path("/");
-                    } else {
-                        $scope.loading.hide();
-                        user.isLogged = false;
-                        user.username = '';
-                        $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
-                    }
-                })
-                .error(function (data, status, headers, config) {
+                    if (user) {
+                                //localStorage["user.isLogged"] = 'true';
+                                //user.isLogged = true;
+                                //user.username = data.username;
+                                //localStorage["authToken"] = data.token;
+                                $location.path("/");
+                            } else {
+                                $scope.loading.hide();
+                                user.isLogged = false;
+                                user.username = '';
+                                $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
+                            }
+                },
+                error: function (user, error) {
+                    alert("Unable to sign up:  " + error.code + " " + error.message);
                     $scope.loading.hide();
-                    user.isLogged = false;
-                    user.username = '';
-                    $('.js-loading-bar').modal('hide');
-                    $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
-                });
+                            user.isLogged = false;
+                            user.username = '';
+                            $('.js-loading-bar').modal('hide');
+                            $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
+                }
+            });
+            
         };
     })
     .controller('TestCtrl', function ($scope, $ionicActionSheet, $location, constants, $http) {

@@ -5,6 +5,7 @@ angular.module('bowlawesome.services', [])
  */
     .factory('LeaguesService', function () {
         var leagues = angular.fromJson(localStorage['leagues']);
+        
         return {
             all: function () {
                 return leagues;
