@@ -396,19 +396,10 @@ angular.module('bowlawesome.controllers', [])
                 success: function (user) {
                     $scope.currentUser = user;
                     $scope.$apply(); // Notify AngularJS to sync currentUser
-                    $scope.loading.hide();
-                    if (user) {
-                        //localStorage["user.isLogged"] = 'true';
-                        //user.isLogged = true;
-                        //user.username = data.username;
-                        //localStorage["authToken"] = data.token;
-                        $location.path("/");
-                    } else {
-                        $scope.loading.hide();
-                        user.isLogged = false;
-                        user.username = '';
-                        $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
-                    }
+                    $scope.loading.hide();                   
+                        localStorage["user.isLogged"] = 'true';
+                        user.isLogged = true;
+                        $location.path("/");                 
                 },
                 error: function (user, error) {
                     alert("Unable to sign up:  " + error.code + " " + error.message);
