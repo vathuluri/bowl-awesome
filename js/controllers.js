@@ -1,6 +1,6 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
-        
+
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -392,39 +392,36 @@ angular.module('bowlawesome.controllers', [])
             var username = userObj.username;
             var password = userObj.password;
             Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
-            var user = new Parse.User();
-            //user.set("email", form.email);
-            user.set("username", userObj.username);
-            user.set("password", userObj.password);
-
-            user.signUp(null, {
+            Parse.User.logIn(username, password, {
                 success: function (user) {
                     $scope.currentUser = user;
                     $scope.$apply(); // Notify AngularJS to sync currentUser
                     $scope.loading.hide();
                     if (user) {
-                                //localStorage["user.isLogged"] = 'true';
-                                //user.isLogged = true;
-                                //user.username = data.username;
-                                //localStorage["authToken"] = data.token;
-                                $location.path("/");
-                            } else {
-                                $scope.loading.hide();
-                                user.isLogged = false;
-                                user.username = '';
-                                $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
-                            }
+                        //localStorage["user.isLogged"] = 'true';
+                        //user.isLogged = true;
+                        //user.username = data.username;
+                        //localStorage["authToken"] = data.token;
+                        $location.path("/");
+                    } else {
+                        $scope.loading.hide();
+                        user.isLogged = false;
+                        user.username = '';
+                        $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
+                    }
                 },
                 error: function (user, error) {
                     alert("Unable to sign up:  " + error.code + " " + error.message);
                     $scope.loading.hide();
-                            user.isLogged = false;
-                            user.username = '';
-                            $('.js-loading-bar').modal('hide');
-                            $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
+                    user.isLogged = false;
+                    user.username = '';
+                    $('.js-loading-bar').modal('hide');
+                    $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
                 }
             });
-            
+
+
+
         };
     })
     .controller('TestCtrl', function ($scope, $ionicActionSheet, $location, constants, $http) {
@@ -618,4 +615,59 @@ angular.module('bowlawesome.controllers', [])
         } else {
             $scope.IsUserLoggedIn = 'false';
         }
+    })
+    .controller('RegisterCtrl', function ($scope) {
+        $scope.doLogin = function (userObj) {
+            // Show the loading overlay and text
+            $scope.loading = $ionicLoading.show({
+
+                // The text to display in the loading indicator
+                content: 'Loading',
+
+                // The animation to use
+                animation: 'fade-in',
+
+                // Will a dark overlay or backdrop cover the entire view
+                showBackdrop: true,
+
+                // The maximum width of the loading indicator
+                // Text will be wrapped if longer than maxWidth
+                maxWidth: 200,
+
+                // The delay in showing the indicator
+                showDelay: 500
+            });
+
+            var user = new Parse.User();
+            //user.set("email", form.email);
+            user.set("username", userObj.username);
+            user.set("password", userObj.password);
+            user.signUp(null, {
+                success: function (user) {
+                    $scope.currentUser = user;
+                    $scope.$apply(); // Notify AngularJS to sync currentUser
+                    $scope.loading.hide();
+                    if (user) {
+                        //localStorage["user.isLogged"] = 'true';
+                        //user.isLogged = true;
+                        //user.username = data.username;
+                        //localStorage["authToken"] = data.token;
+                        $location.path("/");
+                    } else {
+                        $scope.loading.hide();
+                        user.isLogged = false;
+                        user.username = '';
+                        $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
+                    }
+                },
+                error: function (user, error) {
+                    alert("Unable to sign up:  " + error.code + " " + error.message);
+                    $scope.loading.hide();
+                    user.isLogged = false;
+                    user.username = '';
+                    $('.js-loading-bar').modal('hide');
+                    $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
+                }
+            });
+        };
     })
