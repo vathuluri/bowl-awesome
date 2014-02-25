@@ -40,7 +40,7 @@ var app = {
         });*/
         
         try {
-            alert('Device is ready! Make sure you set your app_id below this alert.');
+            //alert('Device is ready! Make sure you set your app_id below this alert.');
             FB.init({ appId: "386895214788542", nativeInterface: CDV.FB, useCachedDialogs: false });
             document.getElementById('data').innerHTML = "";
         } catch (e) {

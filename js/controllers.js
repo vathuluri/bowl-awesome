@@ -369,6 +369,7 @@ angular.module('bowlawesome.controllers', [])
         };
     })
     .controller('LoginCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
+        Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
         $scope.doLogin = function (userObj) {
             // Show the loading overlay and text
             $scope.loading = $ionicLoading.show({
@@ -391,15 +392,16 @@ angular.module('bowlawesome.controllers', [])
             });
             var username = userObj.username;
             var password = userObj.password;
-            Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
+
             Parse.User.logIn(username, password, {
                 success: function (user) {
                     $scope.currentUser = user;
+                    $scope.loading.hide();
+                    localStorage["user.isLogged"] = 'true';
+                    user.isLogged = true;
+                    $location.path("/");
                     $scope.$apply(); // Notify AngularJS to sync currentUser
-                    $scope.loading.hide();                   
-                        localStorage["user.isLogged"] = 'true';
-                        user.isLogged = true;
-                        $location.path("/");                 
+
                 },
                 error: function (user, error) {
                     alert("Unable to sign up:  " + error.code + " " + error.message);
@@ -458,14 +460,19 @@ angular.module('bowlawesome.controllers', [])
         };
     })
     .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
-
+        Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
         $scope.Logout = function () {
-            var logOut = confirm("Are You Sure you want to Logout ?");
-            if (logOut) {
-                localStorage["user.isLogged"] = 'false';
-                localStorage["authToken"] = '';
-                $location.path('/');
-            };
+            //var logOut = confirm("Are You Sure you want to Logout ?");
+            //if (logOut) {
+            //    localStorage["user.isLogged"] = 'false';
+            //    localStorage["authToken"] = '';
+            //    $location.path('/');
+            //};
+            Parse.User.logOut();
+            localStorage["user.isLogged"] = 'false';
+            localStorage["authToken"] = '';
+            $location.path('/');
+            $scope.$apply();
         };
 
         $scope.LovethisApp = function () {
@@ -570,7 +577,33 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.doActions = function (index, contact) {
-            alert(contact.displayName);
+            var Mandrill = require('mandrill');
+            Mandrill.initialize('T0XmpSEZVE15vGki596G5w');
+            Mandrill.sendEmail({
+                message: {
+                    text: "Hello World!",
+                    subject: "Using Cloud Code and Mandrill is great!",
+                    from_email: "vkathuluri@gmail.com",
+                    from_name: "Cloud Code",
+                    to: [
+                      {
+                          email: contact.emails[0].value,
+                          name: contact.displayName
+                      }
+                    ]
+                },
+                async: true
+            }, {
+                success: function (httpResponse) {
+                    console.log(httpResponse);
+                    response.success("Email sent!");
+                },
+                error: function (httpResponse) {
+                    console.error(httpResponse);
+                    response.error("Uh oh, something went wrong");
+                }
+            });
+            //alert(contact.displayName);
             //alert(contact.emails[0].value);
         };
 
