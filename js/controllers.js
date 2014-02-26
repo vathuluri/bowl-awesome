@@ -458,6 +458,37 @@ angular.module('bowlawesome.controllers', [])
             });
 
         };
+
+        $scope.send = function(parameters) {
+            //var Mandrill = require('mandrill');
+            Mandrill.initialize('T0XmpSEZVE15vGki596G5w');
+            Mandrill.sendEmail({
+                    message: {
+                        text: "Hello World!",
+                        subject: "Using Cloud Code and Mandrill is great!",
+                        from_email: "vkathuluri@gmail.com",
+                        from_name: "Cloud Code",
+                        to: [
+                            {
+                                email: "vkathuluri@gmail.com",//contact.emails[0].value,
+                                name: "Vijay" //contact.displayName
+                            }
+                        ]
+                    },
+                    async: true
+                }, {
+                    success: function(httpResponse) {
+                        alert("Email was sent");
+                        console.log(httpResponse);
+                        response.success("Email sent!");
+                    },
+                    error: function(httpResponse) {
+                        alert("Email was sent failed");
+                        console.error(httpResponse);
+                        response.error("Uh oh, something went wrong");
+                    }
+                });
+        };
     })
     .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
         Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
@@ -520,6 +551,40 @@ angular.module('bowlawesome.controllers', [])
     })
     .controller('FriendsCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
         $scope.title = "Friends";
+        
+        $scope.loading = $ionicLoading.show({
+
+            // The text to display in the loading indicator
+            content: 'Loading',
+
+            // The animation to use
+            animation: 'fade-in',
+
+            // Will a dark overlay or backdrop cover the entire view
+            showBackdrop: true,
+
+            // The maximum width of the loading indicator
+            // Text will be wrapped if longer than maxWidth
+            maxWidth: 200,
+
+            // The delay in showing the indicator
+            showDelay: 500
+        });
+
+        $scope.contacts = [];
+        var options = new ContactFindOptions();
+        options.filter = "";
+        //options.filter = $scope.searchTxt;
+        options.multiple = true;
+        var fields = ["displayName", "emails", "photos"];
+        navigator.contacts.find(fields, function (contacts) {
+            $scope.contacts = contacts;
+            $scope.$apply();
+            $scope.loading.hide();
+        }, function (e) {
+            console.log("Error finding contacts " + e.code);
+            $scope.loading.hide();
+        }, options);
 
         $scope.leftButtons = [
               {
@@ -538,43 +603,6 @@ angular.module('bowlawesome.controllers', [])
                     $scope.modal.show();
                 }
             }];
-
-        $scope.find = function () {
-            // Show the loading overlay and text
-            $scope.loading = $ionicLoading.show({
-
-                // The text to display in the loading indicator
-                content: 'Loading',
-
-                // The animation to use
-                animation: 'fade-in',
-
-                // Will a dark overlay or backdrop cover the entire view
-                showBackdrop: true,
-
-                // The maximum width of the loading indicator
-                // Text will be wrapped if longer than maxWidth
-                maxWidth: 200,
-
-                // The delay in showing the indicator
-                showDelay: 500
-            });
-
-            $scope.contacts = [];
-            var options = new ContactFindOptions();
-            options.filter = "";
-            //options.filter = $scope.searchTxt;
-            options.multiple = true;
-            var fields = ["displayName", "emails", "photos"];
-            navigator.contacts.find(fields, function (contacts) {
-                $scope.contacts = contacts;
-                $scope.$apply();
-                $scope.loading.hide();
-            }, function (e) {
-                console.log("Error finding contacts " + e.code);
-                $scope.loading.hide();
-            }, options);
-        };
 
         $scope.doActions = function (index, contact) {
             var Mandrill = require('mandrill');
@@ -595,10 +623,12 @@ angular.module('bowlawesome.controllers', [])
                 async: true
             }, {
                 success: function (httpResponse) {
+                    alert("Email was sent");
                     console.log(httpResponse);
                     response.success("Email sent!");
                 },
                 error: function (httpResponse) {
+                    alert("Email was sent failed");
                     console.error(httpResponse);
                     response.error("Uh oh, something went wrong");
                 }

@@ -2,7 +2,7 @@
     <header-bar title="title" left-buttons="leftButtons" right-buttons="rightButtons" type="bar-positive" align-title="center"></header-bar>
     <!--<div ng-if="IsUserLoggedIn == 'true'">-->
     <content has-header="true" scroll="true" >
-        <div class="list">
+       <!-- <div class="list">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
                     <input type="text" placeholder="Email">
@@ -11,13 +11,13 @@
                     submit
                 </button>
             </div>
-        </div>
+        </div>-->
         <div class="list">
             <div ng-repeat="contact in contacts">
                 <div class="item item-button-right" ng-show="contact.displayName != null">
                     <span >{{ contact.displayName }}</span> 
-                    <span class="button button-balanced" ng-click='doActions($index, contact )'>
-                        <i class="ion-ios7-person-outline"></i><!--&nbsp;<i class="icon ion-ios7-plus-empty"></i>-->
+                    <span class="button button-stable" ng-click='doActions($index, contact )'>
+                        <i class="ion-ios7-personadd-outline"></i>
                     </span>
                 </div>
                 </div>
