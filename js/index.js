@@ -19,27 +19,27 @@
 var gaPlugin;
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
-    
+
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('load', this.onLoad, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
         window.addEventListener("orientationchange", orientationChange, true);
     },
-    onLoad: function() {
-        
+    onLoad: function () {
+
     },
-   
+
     // deviceready Event Handler
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         /*angular.element(document).ready(function() {
             angular.bootstrap(document);
         });*/
-        
+
         //try {
         //    //alert('Device is ready! Make sure you set your app_id below this alert.');
         //    FB.init({ appId: "386895214788542", nativeInterface: CDV.FB, useCachedDialogs: false });
@@ -47,9 +47,20 @@ var app = {
         //} catch (e) {
         //    alert(e);
         //}
-        
-        
+
+
         gaPlugin = window.plugins.gaPlugin;
         gaPlugin.init(successHandler, errorHandler, "UA-48194728-1", 10);
+    },
+    successHandler: function () {
+
+        //Track an open event
+        gaPlugin.trackEvent(function() {
+            "Track event ok<br/>";
+        }, errorHandler, "App", "Open", "App", new Date());
+    },
+    errorHandler: function (e) {
+        //Lame - do nothing	
+        alert(e.toString());
     }
 };

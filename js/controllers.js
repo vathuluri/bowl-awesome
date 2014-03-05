@@ -1,6 +1,6 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
-
+        
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -95,7 +95,7 @@ angular.module('bowlawesome.controllers', [])
                    $scope.sideMenuController.toggleLeft();
                }
            }];
-
+        gaPlugin.trackPage(nativePluginResultHandler, nativePluginErrorHandler, "bowl awesome homw page");
     })
     .controller('EditLeagueCtrl', function ($scope, LeaguesService, $location, $routeParams) {
         $scope.league = LeaguesService.get($routeParams.id);
@@ -174,7 +174,7 @@ angular.module('bowlawesome.controllers', [])
                     $scope.sideMenuController.toggleLeft();
                 }
             }];
-
+        gaPlugin.trackPage(nativePluginResultHandler, nativePluginErrorHandler, "bowl awesome game page");
     })
     .controller('EditSeriesCtrl', function ($scope, $ionicActionSheet, $routeParams, SeriesService, $ionicModal, $location) {
         $scope.series = SeriesService.getBySeries($routeParams.id);
