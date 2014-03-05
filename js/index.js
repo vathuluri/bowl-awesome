@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var gaPlugin;
 var app = {
     // Application Constructor
     initialize: function() {
@@ -48,7 +49,6 @@ var app = {
         //}
         
         
-        var gaPlugin;
         gaPlugin = window.plugins.gaPlugin;
         gaPlugin.init(successHandler, errorHandler, "UA-48194728-1", 10);
     }

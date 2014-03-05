@@ -10,6 +10,7 @@
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.16.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+     <script type="text/javascript" src="GAPlugin.js"></script>
 
     <!-- ionic/angularjs scripts -->
     <script src="js/ionic.js"></script>
@@ -48,14 +49,7 @@
 
     <script type="text/javascript">
         app.initialize();
-
-    </script>
-    <script type="text/javascript" src="ga.js"></script>
-    <script>
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-48194728-1']);
-        _gaq.push(['_setDomainName', 'none']);
-        _gaq.push(['_trackPageview', 'Bowl Awesome']);
+        gaPlugin.trackPage(nativePluginResultHandler, nativePluginErrorHandler, "bowl awesome");
     </script>
 </head>
 
