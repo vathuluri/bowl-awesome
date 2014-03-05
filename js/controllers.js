@@ -650,7 +650,7 @@ angular.module('bowlawesome.controllers', [])
             title: 'Leagues'
         }, {
             id: 2,
-            title: 'Friends'
+            title: 'Share'
         }];
         $scope.selectNavItem = function (item, $index) {
             if ($index == 0) {
