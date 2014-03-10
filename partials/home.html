@@ -10,7 +10,7 @@
                 </span>
             </div>
             <a class="item item-icon-right" ng-repeat="league in leagues" >
-                <span ng-click="doRedirect(league)" style="display: block">
+                <span ng-click='doRedirect(league)' style="display: block">
                     <span>{{league.name}}</span>
                     <span class="item-note"> {{league.avgScore}}</span>
                 </span>
@@ -19,11 +19,8 @@
         </div>                     
         </content>
         </nav-view>
-<!--<div ng-controller="footerCtrl">
-        <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
-        <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
-    </div>-->
+<div ng-controller="footerCtrl">
+    <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
+    <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
+</div>
 
-<script type="text/javascript">
-    //gaPlugin.trackPage(nativePluginResultHandler, nativePluginErrorHandler, "bowl awesome homw page");
-</script>

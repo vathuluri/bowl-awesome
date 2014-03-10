@@ -1,6 +1,5 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
-
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
