@@ -1,6 +1,6 @@
 angular.module('bowlawesome.controllers', [])
     .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
-        
+
         $scope.leagues = angular.fromJson(window.localStorage['leagues']);
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -95,7 +95,7 @@ angular.module('bowlawesome.controllers', [])
                    $scope.sideMenuController.toggleLeft();
                }
            }];
-        
+
     })
     .controller('EditLeagueCtrl', function ($scope, LeaguesService, $location, $routeParams) {
         $scope.league = LeaguesService.get($routeParams.id);
@@ -174,7 +174,7 @@ angular.module('bowlawesome.controllers', [])
                     $scope.sideMenuController.toggleLeft();
                 }
             }];
-        
+
     })
     .controller('EditSeriesCtrl', function ($scope, $ionicActionSheet, $routeParams, SeriesService, $ionicModal, $location) {
         $scope.series = SeriesService.getBySeries($routeParams.id);
@@ -459,35 +459,7 @@ angular.module('bowlawesome.controllers', [])
 
         };
 
-        $scope.send = function(parameters) {
-            //var Mandrill = require('mandrill');
-            Mandrill.initialize('T0XmpSEZVE15vGki596G5w');
-            Mandrill.sendEmail({
-                    message: {
-                        text: "Hello World!",
-                        subject: "Using Cloud Code and Mandrill is great!",
-                        from_email: "vkathuluri@gmail.com",
-                        from_name: "Cloud Code",
-                        to: [
-                            {
-                                email: "vkathuluri@gmail.com",//contact.emails[0].value,
-                                name: "Vijay" //contact.displayName
-                            }
-                        ]
-                    },
-                    async: true
-                }, {
-                    success: function(httpResponse) {
-                        alert("Email was sent");
-                        console.log(httpResponse);
-                        response.success("Email sent!");
-                    },
-                    error: function(httpResponse) {
-                        alert("Email was sent failed");
-                        console.error(httpResponse);
-                        response.error("Uh oh, something went wrong");
-                    }
-                });
+        $scope.send = function (parameters) {
         };
     })
     .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
@@ -551,7 +523,7 @@ angular.module('bowlawesome.controllers', [])
     })
     .controller('FriendsCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
         $scope.title = "Friends";
-        
+
         $scope.loading = $ionicLoading.show({
 
             // The text to display in the loading indicator
