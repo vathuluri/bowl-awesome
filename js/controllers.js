@@ -1,6 +1,6 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams) {
-        $scope.leagues = angular.fromJson(window.localStorage['leagues']);
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams, LeaguesService) {
+        $scope.leagues = LeaguesService.all();
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
             $scope.modal = modal;
@@ -16,6 +16,13 @@ angular.module('bowlawesome.controllers', [])
                 tap: function (e) {
                     $scope.modal.show();
                 }
+            }, {
+                type: 'button-clear',
+                content: '<i class="icon ion-ios7-heart-outline"></i>',
+                tap: function (e) {
+                    $location.path('/feedback/');
+                    //$scope.modal.show();
+                }
             }];
 
         $scope.closeModal = function () {
@@ -27,18 +34,9 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.createNewLeague = function (record) {
-            var leagues;
-
-            if (typeof localStorage["leagues"] != 'undefined') {
-                leagues = angular.fromJson(window.localStorage['leagues']);
-                leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
-            } else {
-                leagues = new Array();
-                leagues.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
-            }
-            window.localStorage['leagues'] = angular.toJson(leagues);
             record.leagueName = "";
-            $scope.leagues = angular.fromJson(window.localStorage['leagues']);
+            LeaguesService.save(record);
+            $scope.leagues = LeaguesService.all();
             $scope.modal.hide();
         };
 
@@ -96,10 +94,16 @@ angular.module('bowlawesome.controllers', [])
            }];
 
     })
+    .controller('FeedbackCtrl', function ($scope, $location) {
+        $scope.showZone = function() {
+            $location.path('/ideazone/');
+        };
+    })
     .controller('EditLeagueCtrl', function ($scope, LeaguesService, $location, $routeParams) {
         $scope.league = LeaguesService.get($routeParams.id);
         $scope.editLeague = function (league) {
             LeaguesService.edit(league);
+            $scope.leagues = LeaguesService.all();
             $location.path("/");
         };
     })
@@ -622,12 +626,20 @@ angular.module('bowlawesome.controllers', [])
         }, {
             id: 2,
             title: 'Share'
+        }, {
+            id: 3,
+            title: 'Feedback'
         }];
         $scope.selectNavItem = function (item, $index) {
             if ($index == 0) {
                 $location.path("/");
                 $scope.sideMenuController.close();
             }
+            if ($index == 2) {
+                $location.path("/feedback");
+                $scope.sideMenuController.close();
+            }
+
             else {
                 $location.path("/friends");
                 $scope.sideMenuController.close();
