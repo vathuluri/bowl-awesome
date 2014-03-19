@@ -8,6 +8,7 @@ angular.module('bowlawesome.services', [])
         
         return {
             all: function () {
+                leagues = angular.fromJson(localStorage['leagues']);
                 return leagues;
             },
             get: function (leagueId) {
@@ -34,6 +35,17 @@ angular.module('bowlawesome.services', [])
                 }
                 window.localStorage['leagues'] = angular.toJson(leagues);
                 return leagues;
+            },
+            save: function (record) {
+                var leaguesRecord;
+                if (typeof localStorage["leagues"] != 'undefined') {
+                    leaguesRecord = angular.fromJson(window.localStorage['leagues']);
+                    leaguesRecord.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
+                } else {
+                    leaguesRecord = new Array();
+                    leaguesRecord.push({ id: Math.floor((Math.random() * 1000) + 1), name: record.leagueName, avgScore: 0 });
+                }
+                window.localStorage['leagues'] = angular.toJson(leaguesRecord);
             }
         };
     })

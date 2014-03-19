@@ -50,7 +50,8 @@ angular.module('bowlawesome', ['ionic', 'ngRoute', 'ngAnimate', 'bowlawesome.ser
     $routeProvider.when('/settings', { templateUrl: 'partials/settings.html', controller: 'SettingsCtrl' });
     $routeProvider.when('/notifications', { templateUrl: 'partials/notifications.html', controller: 'NotificationsCtrl' });
     $routeProvider.when('/test', { templateUrl: 'partials/test.html', controller: 'TestCtrl' });
-
+    $routeProvider.when('/feedback', { templateUrl: 'partials/feedback.html', controller: 'FeedbackCtrl' });
+    $routeProvider.when('/ideazone', { templateUrl: 'partials/ideazone.html'});
     // if none of the above routes are met, use this fallback
     $routeProvider.otherwise({redirectTo: '/'});
 
