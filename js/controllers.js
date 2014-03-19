@@ -635,7 +635,7 @@ angular.module('bowlawesome.controllers', [])
                 $location.path("/");
                 $scope.sideMenuController.close();
             }
-            if ($index == 2) {
+            else if ($index == 2) {
                 $location.path("/feedback");
                 $scope.sideMenuController.close();
             }
