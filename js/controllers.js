@@ -13,15 +13,8 @@ angular.module('bowlawesome.controllers', [])
             {
                 type: 'button-clear',
                 content: '<i class="icon ion-ios7-plus-outline"></i>',
-                tap: function (e) {
+                tap: function(e) {
                     $scope.modal.show();
-                }
-            }, {
-                type: 'button-clear',
-                content: '<i class="icon ion-ios7-heart-outline"></i>',
-                tap: function (e) {
-                    $location.path('/feedback/');
-                    //$scope.modal.show();
                 }
             }];
 

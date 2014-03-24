@@ -23,4 +23,7 @@
     <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
     <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>
 </div>
+<script>
+    ga_storage._trackPageview('/home', 'home page');
 
+</script>
