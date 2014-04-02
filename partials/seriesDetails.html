@@ -1,11 +1,11 @@
 ﻿<nav-view animation="slide-left-right">     
-        <header-bar
+    <header-bar
         title="title"
         left-buttons="leftButtons"
         right-buttons="rightButtons"
         type="bar-positive"
         align-title="center">
-</header-bar>
+    </header-bar>
     <content has-header="true" scroll="true">
         <div class="list">
             <div class="item item-divider">
@@ -16,12 +16,13 @@
             </div>
             <a class="item item-icon-right" ng-repeat="seriesObj in serieses" >
                 <span ng-click="doRedirect(seriesObj)" style="display: block"> <span>{{seriesObj.name}}</span>
-                <span class="item-note">  {{seriesObj.avgScore}}</span></span>
+                    <span class="item-note">  {{seriesObj.avgScore}}</span></span>
                 <span ng-click='doActions($index, seriesObj )'><i class="icon ion-ios7-more-outline"></i></span>
             </a>
         </div> 
     </content>
 </nav-view>
+<ng-bowlawesomefooter></ng-bowlawesomefooter>
 
 <div ng-controller="footerCtrl">
     <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>

@@ -17,8 +17,12 @@
                 <span ng-click='doActions($index, league)'><i class="icon ion-ios7-more-outline"></i></span>
             </a>
         </div>                     
-        </content>
-        </nav-view>
+    </content>
+</nav-view>
+
+<ng-bowlawesomefooter></ng-bowlawesomefooter>
+
+
 <div ng-controller="footerCtrl">
     <div ng-if="IsUserLoggedIn == 'false'" ng-include="'partials/footer-beforelogin.html'"></div>
     <div ng-if="IsUserLoggedIn == 'true'" ng-include="'partials/footer-afterlogin.html'"></div>

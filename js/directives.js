@@ -76,4 +76,10 @@
              });
          }
      };
- });
+ })
+.directive('ngBowlAwesomeFooter', function () {
+    return {
+        restrict: 'A',
+        template: 'partials/footer-beforelogin.html'
+    };
+});
