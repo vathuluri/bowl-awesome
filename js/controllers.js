@@ -1,5 +1,5 @@
 angular.module('bowlawesome.controllers', [])
-    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams, LeaguesService) {
+    .controller('IndexCtrl', function ($scope, $ionicActionSheet, $ionicModal, $location, $routeParams, LeaguesService, authenticationService) {
         $scope.leagues = LeaguesService.all();
         $scope.title = "Leagues";
         $ionicModal.fromTemplateUrl('modal.html', function (modal) {
@@ -13,7 +13,7 @@ angular.module('bowlawesome.controllers', [])
             {
                 type: 'button-clear',
                 content: '<i class="icon ion-ios7-plus-outline"></i>',
-                tap: function(e) {
+                tap: function (e) {
                     $scope.modal.show();
                 }
             }];
@@ -27,9 +27,9 @@ angular.module('bowlawesome.controllers', [])
         };
 
         $scope.createNewLeague = function (record) {
-            record.leagueName = "";
             LeaguesService.save(record);
             $scope.leagues = LeaguesService.all();
+            record.leagueName = "";
             $scope.modal.hide();
         };
 
@@ -86,9 +86,10 @@ angular.module('bowlawesome.controllers', [])
                }
            }];
 
+        $scope.IsUserLoggedIn = authenticationService.isUserLoggedIn();
     })
     .controller('FeedbackCtrl', function ($scope, $location) {
-        $scope.showZone = function() {
+        $scope.showZone = function () {
             $location.path('/ideazone/');
         };
     })
@@ -308,49 +309,12 @@ angular.module('bowlawesome.controllers', [])
             $scope.modal.hide();
         };
     })
-    .controller('footerCtrl', function ($scope, $location, constants) {
-        OAuth.initialize('hkfEWjkRun-sqqYo2SCPSn035S8');
-        $scope.googlePlusLogin = function () {
-
-            OAuth.popup('google', function (error, result) {
-                var xhr = new XMLHttpRequest();
-                //var oauthToken = gapi.auth.getToken();
-                xhr.open('GET',
-                    'https://www.googleapis.com/plus/v1/people/rain2showers@gmail.com/people/visible');
-                xhr.setRequestHeader('Authorization',
-                    'Bearer ' + result.access_token);
-                xhr.send();
-                $scope.$apply(function () {
-                    $scope.username = "Timeout called!";
-                });
-                var token = result.access_token;
-                alert(xhr.responseText);
-                //handle error with error
-                //use result.access_token in your API request
-            });
-
-        };
-        $scope.facebookLogin = function () {
-            OAuth.popup('facebook', function (err, result) { // or OAuth.callback
-                // handle error with err
-                // call the API with the jQuery's $.ajax style:
-                result.get('/me').done(function (data) {
-                    // data is the API call's response. e.g. data.name for your facebook's fullname.
-                    $scope.$apply(function () {
-                        $scope.username = data.name;
-                    });
-                });
-            });
-        };
+    .controller('footerCtrl', function ($scope, $location, constants, authenticationService) {
         $scope.login = function () {
             $location.path('/login');
         };
 
-        if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
-            $scope.IsUserLoggedIn = constants.userLoggedIn;
-        } else {
-            $scope.IsUserLoggedIn = 'false';
-        }
+        $scope.IsUserLoggedIn = authenticationService.isUserLoggedIn();
 
         $scope.showSettings = function () {
             $location.path("/settings");
@@ -364,10 +328,8 @@ angular.module('bowlawesome.controllers', [])
             $location.path("/friends");
         };
     })
-    .controller('LoginCtrl', function ($scope, $location, constants, $http, $ionicLoading) {
-        Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
+    .controller('LoginCtrl', function ($scope, $location, constants, $http, $ionicLoading, authenticationService) {
         $scope.doLogin = function (userObj) {
-            // Show the loading overlay and text
             $scope.loading = $ionicLoading.show({
 
                 // The text to display in the loading indicator
@@ -386,30 +348,11 @@ angular.module('bowlawesome.controllers', [])
                 // The delay in showing the indicator
                 showDelay: 500
             });
-            var username = userObj.username;
-            var password = userObj.password;
-
-            Parse.User.logIn(username, password, {
-                success: function (user) {
-                    $scope.currentUser = user;
-                    $scope.loading.hide();
-                    localStorage["user.isLogged"] = 'true';
-                    user.isLogged = true;
-                    $location.path("/");
-                    $scope.$apply(); // Notify AngularJS to sync currentUser
-
-                },
-                error: function (user, error) {
-                    alert("Unable to sign up:  " + error.code + " " + error.message);
-                    $scope.loading.hide();
-                    user.isLogged = false;
-                    user.username = '';
-                    $('.js-loading-bar').modal('hide');
-                    $scope.errorMessage = '<div class="form-group" style="margin-top: 6px;"><div class="alert alert-danger">' + data.errors + '</div></div>';
-                }
+            authenticationService.login(userObj).then(function (data) {
+                $scope.loading.hide();
+                $location.path("/");
+                $scope.currentUser = data;
             });
-
-
 
         };
     })
@@ -458,20 +401,13 @@ angular.module('bowlawesome.controllers', [])
         $scope.send = function (parameters) {
         };
     })
-    .controller('SettingsCtrl', function ($scope, $location, constants, $http) {
-        Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
+    .controller('SettingsCtrl', function ($scope, $location, constants, $http, authenticationService) {
         $scope.Logout = function () {
-            //var logOut = confirm("Are You Sure you want to Logout ?");
-            //if (logOut) {
-            //    localStorage["user.isLogged"] = 'false';
-            //    localStorage["authToken"] = '';
-            //    $location.path('/');
-            //};
-            Parse.User.logOut();
-            localStorage["user.isLogged"] = 'false';
-            localStorage["authToken"] = '';
-            $location.path('/');
-            $scope.$apply();
+            authenticationService.logOut().then(function () {
+                localStorage["user.isLogged"] = 'false';
+                localStorage["authToken"] = '';
+                $location.path('/');
+            });
         };
 
         $scope.LovethisApp = function () {
@@ -487,15 +423,6 @@ angular.module('bowlawesome.controllers', [])
                       $scope.sideMenuController.toggleLeft();
                   }
               }];
-
-        //$scope.rightButtons = [
-        //    {
-        //        type: 'button-clear',
-        //        content: '<i class="icon ion-ios7-people-outline"></i>',
-        //        tap: function (e) {
-        //            $scope.modal.show();
-        //        }
-        //    }];
     })
     .controller('NotificationsCtrl', function ($scope, $location, constants, $http) {
         $scope.title = "Notifications";
@@ -605,12 +532,6 @@ angular.module('bowlawesome.controllers', [])
             //alert(contact.emails[0].value);
         };
 
-        if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
-            $scope.IsUserLoggedIn = constants.userLoggedIn;
-        } else {
-            $scope.IsUserLoggedIn = 'false';
-        }
-
     })
     .controller('leftNavCtrl', function ($scope, $location) {
         $scope.items = [{
@@ -638,13 +559,6 @@ angular.module('bowlawesome.controllers', [])
                 $scope.sideMenuController.close();
             }
         };
-    })
-    .controller('HomeCtrl', function ($scope, constants) {
-        if (typeof constants.userLoggedIn !== 'undefined' && constants.userLoggedIn !== null) {
-            $scope.IsUserLoggedIn = constants.userLoggedIn;
-        } else {
-            $scope.IsUserLoggedIn = 'false';
-        }
     })
     .controller('RegisterCtrl', function ($scope) {
         $scope.doLogin = function (userObj) {

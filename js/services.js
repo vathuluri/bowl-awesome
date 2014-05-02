@@ -5,7 +5,7 @@ angular.module('bowlawesome.services', [])
  */
     .factory('LeaguesService', function () {
         var leagues = angular.fromJson(localStorage['leagues']);
-        
+
         return {
             all: function () {
                 leagues = angular.fromJson(localStorage['leagues']);
@@ -69,7 +69,7 @@ angular.module('bowlawesome.services', [])
                 }
                 return seriesesByLeague;
             },
-            getBySeries: function(seriesId) {
+            getBySeries: function (seriesId) {
                 serieses = angular.fromJson(localStorage['series']);
                 var seriesesBySeries = {};
                 if (typeof serieses != 'undefined') {
@@ -202,6 +202,47 @@ angular.module('bowlawesome.services', [])
             records: function () {
                 return gameNumber;
 
+            }
+        };
+    })
+    .factory('authenticationService', function (constants, $q) {
+        Parse.initialize("NR9QRuzsk74hLarz3r8TvtWClf2FfSvSjoyWlxM4", "ZNcrOMYsqKYQQ5zDaMicZpD2vUt9FKV9LkKq9Zww");
+        return {
+            login: function (userObj) {
+                var defered = $q.defer();
+                var username = userObj.username;
+                var password = userObj.password;
+                Parse.User.logIn(username, password, {
+                    success: function (user) {
+                        defered.resolve(user);
+                        localStorage["user.isLogged"] = 'true';
+                        user.isLogged = true;
+                        constants.isLogged = 'true';
+                    },
+                    error: function (user, error) {
+                        defered.reject(error);
+                        alert("Unable to sign up:  " + error.code + " " + error.message);
+                        user.userLoggedIn = false;
+                        user.username = '';
+                        localStorage["user.isLogged"] = 'false';
+                        constants.isLogged = 'false';
+                    }
+                });
+                return defered.promise;
+            },
+            register: function () {
+            },
+            resetPassword: function () {
+            },
+            isUserLoggedIn: function () {
+                return localStorage["user.isLogged"];
+            },
+            logOut: function () {
+                var defered = $q.defer();
+                localStorage["user.isLogged"] = 'false';
+                Parse.User.logOut();
+                defered.resolve(true);
+                return defered.promise;
             }
         };
     })
