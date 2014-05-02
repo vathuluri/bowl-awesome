@@ -29,6 +29,7 @@
   <gap:plugin name="org.apache.cordova.device" />
   <gap:plugin name="org.apache.cordova.contacts" />
   <gap:plugin name="com.adobe.plugins.gaplugin" />
+  <gap:plugin name="nl.x-services.plugins.socialsharing" />
   <!--<gap:plugin name="com.phonegap.plugins.facebookconnect">
     <param name="APP_ID" value="386895214788542" />
     <param name="APP_NAME" value="Bowl­A­w­e­some" />
